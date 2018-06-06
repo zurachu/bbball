@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>zurapce: zurapce/Turbo.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">zurapce
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','検索');
+});
+</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6808de0d3b614476abd72b1d98fe57fc.html">zurapce</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">関数</a>  </div>
+  <div class="headertitle">
+<div class="title">Turbo.h ファイル</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>48 MHz 動作関連.  
+<a href="#details">[詳解]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a39fad5c2d77cae487b0b2fb862c5d0e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Turbo_8h.html#a39fad5c2d77cae487b0b2fb862c5d0e0">Turbo_Init</a> (void)</td></tr>
+<tr class="memdesc:a39fad5c2d77cae487b0b2fb862c5d0e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">48 MHz モードに切り替えます.  <a href="#a39fad5c2d77cae487b0b2fb862c5d0e0">[詳解]</a><br /></td></tr>
+<tr class="separator:a39fad5c2d77cae487b0b2fb862c5d0e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a4ed2e4a24e0465fd40e815e50a6b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Turbo_8h.html#aa6a4ed2e4a24e0465fd40e815e50a6b5">Turbo_Exit</a> (void)</td></tr>
+<tr class="memdesc:aa6a4ed2e4a24e0465fd40e815e50a6b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">標準 ( 24 MHz ) モードに切り替えます.  <a href="#aa6a4ed2e4a24e0465fd40e815e50a6b5">[詳解]</a><br /></td></tr>
+<tr class="separator:aa6a4ed2e4a24e0465fd40e815e50a6b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>48 MHz 動作関連. </p>
+<p>ささお氏の「P/ECEを48MHzモードで動かすための小細工 ver0.9b」を取り込み。 <a href="http://junkbox.info/piece/">http://junkbox.info/piece/</a> </p><div class="fragment"><div class="line"><span class="comment">//---------------------------------------------------------------------</span></div><div class="line"><span class="comment">//  - このソースは改造・再配布など自由にお使いください。許可は不要です。</span></div><div class="line"><span class="comment">//  - 動作確認は、BIOS ver1.18 2002.01.16 上で行っています。</span></div><div class="line"><span class="comment">//  - 使用は自己責任でお願いします。</span></div><div class="line"><span class="comment">//  - 現時点では、48MHzモードにおけるLCD/サウンド再生/1msタイマの正しい</span></div><div class="line"><span class="comment">//    動作と、48MHzモードから24MHzモードに復帰した場合に正常にUSBアクセ</span></div><div class="line"><span class="comment">//    スが行えることのみ確認しています。</span></div><div class="line"><span class="comment">//  - ソースを送っていただければ、上記以外についても対応していきます。</span></div><div class="line"><span class="comment">//---------------------------------------------------------------------</span></div><div class="line"><span class="comment">//  pceCPUSetSpeed()命令と併用する場合には、Turbo_Init/Exitを必ず以下の順で</span></div><div class="line"><span class="comment">//  行ってください。</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  pceCPUSetSpeed(n); の後に Turbo_Init();</span></div><div class="line"><span class="comment">//  Turbo_Exit(); の後に pceCPUSetSpeed(n);</span></div><div class="line"><span class="comment">//---------------------------------------------------------------------</span></div></div><!-- fragment --> <pre class="fragment">@author zurachu</pre></div><h2 class="groupheader">関数詳解</h2>
+<a id="a39fad5c2d77cae487b0b2fb862c5d0e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39fad5c2d77cae487b0b2fb862c5d0e0">&#9670;&nbsp;</a></span>Turbo_Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Turbo_Init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>48 MHz モードに切り替えます. </p>
+
+</div>
+</div>
+<a id="aa6a4ed2e4a24e0465fd40e815e50a6b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6a4ed2e4a24e0465fd40e815e50a6b5">&#9670;&nbsp;</a></span>Turbo_Exit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Turbo_Exit </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>標準 ( 24 MHz ) モードに切り替えます. </p>
+<p>pceAppExit() には 必ず <a class="el" href="Turbo_8h.html#aa6a4ed2e4a24e0465fd40e815e50a6b5" title="標準 ( 24 MHz ) モードに切り替えます. ">Turbo_Exit()</a>; を書くようにしてください </p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

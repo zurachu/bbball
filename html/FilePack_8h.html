@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>zurapce: zurapce/FilePack.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">zurapce
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','検索');
+});
+</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6808de0d3b614476abd72b1d98fe57fc.html">zurapce</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">データ構造</a> &#124;
+<a href="#typedef-members">型定義</a> &#124;
+<a href="#func-members">関数</a>  </div>
+  <div class="headertitle">
+<div class="title">FilePack.h ファイル</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>ファイルパック 関連.  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &lt;piece.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+データ構造</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFilePackHandle.html">FilePackHandle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">パックファイル読み込みハンドル  <a href="structFilePackHandle.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+型定義</h2></td></tr>
+<tr class="memitem:a911412a50cf2aaa47899fa418ef9eb45"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structFilePackHandle.html">FilePackHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FilePack_8h.html#a911412a50cf2aaa47899fa418ef9eb45">FilePackHandle</a></td></tr>
+<tr class="separator:a911412a50cf2aaa47899fa418ef9eb45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a5659a2286d97ddf3c957a68297ef3404"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FilePack_8h.html#a5659a2286d97ddf3c957a68297ef3404">FilePackHandle_Open</a> (<a class="el" href="structFilePackHandle.html">FilePackHandle</a> *handle, char const *filename)</td></tr>
+<tr class="memdesc:a5659a2286d97ddf3c957a68297ef3404"><td class="mdescLeft">&#160;</td><td class="mdescRight">ハンドルを開く.  <a href="#a5659a2286d97ddf3c957a68297ef3404">[詳解]</a><br /></td></tr>
+<tr class="separator:a5659a2286d97ddf3c957a68297ef3404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a047338a06beb0ee7273e3c500eb5f19a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FilePack_8h.html#a047338a06beb0ee7273e3c500eb5f19a">FilePackHandle_Close</a> (<a class="el" href="structFilePackHandle.html">FilePackHandle</a> *handle)</td></tr>
+<tr class="memdesc:a047338a06beb0ee7273e3c500eb5f19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ハンドルを閉じる.  <a href="#a047338a06beb0ee7273e3c500eb5f19a">[詳解]</a><br /></td></tr>
+<tr class="separator:a047338a06beb0ee7273e3c500eb5f19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb57d3a2c92d93ae701b563e47102eb9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FilePack_8h.html#aeb57d3a2c92d93ae701b563e47102eb9">FilePackHandle_ReadTo</a> (unsigned char *dst, <a class="el" href="structFilePackHandle.html">FilePackHandle</a> *handle, char const *filename)</td></tr>
+<tr class="memdesc:aeb57d3a2c92d93ae701b563e47102eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">パックファイルから１ファイルを読み込んでバッファに格納.  <a href="#aeb57d3a2c92d93ae701b563e47102eb9">[詳解]</a><br /></td></tr>
+<tr class="separator:aeb57d3a2c92d93ae701b563e47102eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56583780928229038ffa135057abdec4"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FilePack_8h.html#a56583780928229038ffa135057abdec4">FilePackHandle_ReadAlloc</a> (<a class="el" href="structFilePackHandle.html">FilePackHandle</a> *handle, char const *filename)</td></tr>
+<tr class="memdesc:a56583780928229038ffa135057abdec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ファイルサイズ分のヒープを確保して読み込み.  <a href="#a56583780928229038ffa135057abdec4">[詳解]</a><br /></td></tr>
+<tr class="separator:a56583780928229038ffa135057abdec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accb05c1dfc0991c839b9981596816dee"><td class="memItemLeft" align="right" valign="top">unsigned char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FilePack_8h.html#accb05c1dfc0991c839b9981596816dee">FilePack_Data</a> (char const *filename, unsigned char *source)</td></tr>
+<tr class="memdesc:accb05c1dfc0991c839b9981596816dee"><td class="mdescLeft">&#160;</td><td class="mdescRight">メモリ上のパックデータから、指定ファイルへのポインタを取得.  <a href="#accb05c1dfc0991c839b9981596816dee">[詳解]</a><br /></td></tr>
+<tr class="separator:accb05c1dfc0991c839b9981596816dee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>ファイルパック 関連. </p>
+<p>P/ECE 開発環境付属の FilePack.exe で生成したパックデータからファイルを抽出します。 </p><dl class="section author"><dt>著者</dt><dd>zurachu </dd></dl>
+</div><h2 class="groupheader">型定義詳解</h2>
+<a id="a911412a50cf2aaa47899fa418ef9eb45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a911412a50cf2aaa47899fa418ef9eb45">&#9670;&nbsp;</a></span>FilePackHandle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structFilePackHandle.html">FilePackHandle</a> <a class="el" href="structFilePackHandle.html">FilePackHandle</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a5659a2286d97ddf3c957a68297ef3404"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5659a2286d97ddf3c957a68297ef3404">&#9670;&nbsp;</a></span>FilePackHandle_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FilePackHandle_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFilePackHandle.html">FilePackHandle</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ハンドルを開く. </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>ハンドル </td></tr>
+    <tr><td class="paramname">filename</td><td>パックファイル名 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>戻り値</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>正常終了 </td></tr>
+    <tr><td class="paramname">1</td><td>パックファイルが無い </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a047338a06beb0ee7273e3c500eb5f19a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a047338a06beb0ee7273e3c500eb5f19a">&#9670;&nbsp;</a></span>FilePackHandle_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FilePackHandle_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFilePackHandle.html">FilePackHandle</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ハンドルを閉じる. </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>ハンドル </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>戻り値</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>常に正常終了 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb57d3a2c92d93ae701b563e47102eb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb57d3a2c92d93ae701b563e47102eb9">&#9670;&nbsp;</a></span>FilePackHandle_ReadTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FilePackHandle_ReadTo </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structFilePackHandle.html">FilePackHandle</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>パックファイルから１ファイルを読み込んでバッファに格納. </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>出力先バッファ </td></tr>
+    <tr><td class="paramname">handle</td><td>ハンドル </td></tr>
+    <tr><td class="paramname">filename</td><td>ファイル名 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>読み込みサイズ（失敗時０） </dd></dl>
+<dl class="section see"><dt>参照</dt><dd><a class="el" href="File_8h.html#adf1154fa5aa76b847f7c311b3df9beef" title="ファイルの一部分を読み込んでバッファに格納. ">FileAcc_ReadPosTo()</a> </dd></dl>
+
+</div>
+</div>
+<a id="a56583780928229038ffa135057abdec4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56583780928229038ffa135057abdec4">&#9670;&nbsp;</a></span>FilePackHandle_ReadAlloc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char* FilePackHandle_ReadAlloc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structFilePackHandle.html">FilePackHandle</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ファイルサイズ分のヒープを確保して読み込み. </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>ハンドル </td></tr>
+    <tr><td class="paramname">filename</td><td>ファイル名 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>読み込んだヒープ（失敗時 NULL） </dd></dl>
+<dl class="section warning"><dt>警告</dt><dd>不要になったヒープは pceHeapAlloc() で解放すること。 </dd></dl>
+<dl class="section see"><dt>参照</dt><dd><a class="el" href="File_8h.html#ac154a5e080a9f6658c514c7f8208b510" title="ファイルの一部分をサイズ分のヒープを確保して読み込み. ">FileAcc_ReadPosAlloc()</a> </dd></dl>
+
+</div>
+</div>
+<a id="accb05c1dfc0991c839b9981596816dee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accb05c1dfc0991c839b9981596816dee">&#9670;&nbsp;</a></span>FilePack_Data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char* FilePack_Data </td>
+          <td>(</td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>メモリ上のパックデータから、指定ファイルへのポインタを取得. </p>
+<p>デコードsrc の FPK_FindPackData() と等価。 </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>ファイル名 </td></tr>
+    <tr><td class="paramname">source</td><td>パックデータ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>指定ファイルへのポインタ（失敗時 NULL） </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

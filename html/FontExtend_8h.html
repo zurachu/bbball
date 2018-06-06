@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>zurapce: zurapce/FontExtend.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">zurapce
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','検索');
+});
+</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6808de0d3b614476abd72b1d98fe57fc.html">zurapce</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">関数</a>  </div>
+  <div class="headertitle">
+<div class="title">FontExtend.h ファイル</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>拡張フォント関連.  
+<a href="#details">[詳解]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a7b494c5be687ee4345c74ae71e388387"><td class="memItemLeft" align="right" valign="top">unsigned char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FontExtend_8h.html#a7b494c5be687ee4345c74ae71e388387">FontExtend_GetAdrs</a> (unsigned short code)</td></tr>
+<tr class="memdesc:a7b494c5be687ee4345c74ae71e388387"><td class="mdescLeft">&#160;</td><td class="mdescRight">フォントのアドレスを取得.  <a href="#a7b494c5be687ee4345c74ae71e388387">[詳解]</a><br /></td></tr>
+<tr class="separator:a7b494c5be687ee4345c74ae71e388387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a407dcf7c240a2db269ab329d653b0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FontExtend_8h.html#a5a407dcf7c240a2db269ab329d653b0d">FontExtend_Hook_GetAdrs</a> (void)</td></tr>
+<tr class="memdesc:a5a407dcf7c240a2db269ab329d653b0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">フォントアドレス取得に <a class="el" href="FontExtend_8h.html#a7b494c5be687ee4345c74ae71e388387" title="フォントのアドレスを取得. ">FontExtend_GetAdrs()</a> を使うよう、API をフックします.  <a href="#a5a407dcf7c240a2db269ab329d653b0d">[詳解]</a><br /></td></tr>
+<tr class="separator:a5a407dcf7c240a2db269ab329d653b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fe0e9015444acf85b2b871ca8a2c2ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FontExtend_8h.html#a1fe0e9015444acf85b2b871ca8a2c2ff">FontExtend_Unhook_GetAdrs</a> (void)</td></tr>
+<tr class="memdesc:a1fe0e9015444acf85b2b871ca8a2c2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">フォントアドレス取得に通常の pceFontGetAdrs() を使うよう、API のフックを解除します.  <a href="#a1fe0e9015444acf85b2b871ca8a2c2ff">[詳解]</a><br /></td></tr>
+<tr class="separator:a1fe0e9015444acf85b2b871ca8a2c2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>拡張フォント関連. </p>
+<p>API をフックすることで、pceFont 系 API に拡張フォントを追加します。 拡張フォントは、AQUAPLUS 製ゲームの仕様に準じる予定です。 </p><pre class="fragment">    拡張フォントの文字コード
+    - 0xF040 - 「!?」
+    - 0xF041 - 「!!」
+    - 0xF042 - ハートマーク
+    - 0xF046 - ２文字分の「〜」の左側
+    - 0xF047 - ２文字分の「〜」の右側
+</pre> <pre class="fragment">@author zurachu</pre></div><h2 class="groupheader">関数詳解</h2>
+<a id="a7b494c5be687ee4345c74ae71e388387"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b494c5be687ee4345c74ae71e388387">&#9670;&nbsp;</a></span>FontExtend_GetAdrs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char const* FontExtend_GetAdrs </td>
+          <td>(</td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>code</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>フォントのアドレスを取得. </p>
+<p>拡張フォント文字コードと照合した後、通常の pceFontGetAdrs() を呼びます。 </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">code</td><td>文字コード </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>フォントのアドレス </dd></dl>
+
+</div>
+</div>
+<a id="a5a407dcf7c240a2db269ab329d653b0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a407dcf7c240a2db269ab329d653b0d">&#9670;&nbsp;</a></span>FontExtend_Hook_GetAdrs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FontExtend_Hook_GetAdrs </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>フォントアドレス取得に <a class="el" href="FontExtend_8h.html#a7b494c5be687ee4345c74ae71e388387" title="フォントのアドレスを取得. ">FontExtend_GetAdrs()</a> を使うよう、API をフックします. </p>
+
+</div>
+</div>
+<a id="a1fe0e9015444acf85b2b871ca8a2c2ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fe0e9015444acf85b2b871ca8a2c2ff">&#9670;&nbsp;</a></span>FontExtend_Unhook_GetAdrs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FontExtend_Unhook_GetAdrs </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>フォントアドレス取得に通常の pceFontGetAdrs() を使うよう、API のフックを解除します. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

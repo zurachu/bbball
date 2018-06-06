@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>zurapce: 16階調画像フォーマット</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">zurapce
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','検索');
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">16階調画像フォーマット </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>PIECE_BMP の拡張フォーマットです。</p>
+<p>構造体は PIECE_BMP をそのまま使うため、 通常の PIECE_BMP と同様に <a class="el" href="PieceBmp_8h.html#a489e07f232644cfa9c1328b61c6c564c" title="PIECE_BMP の初期化. ">PieceBmp_Construct()</a> で初期化できます。 元データとしては、 16階調 BMP を pgd16cnv で変換したものを渡してください。 <a href="https://github.com/zurachu/pgd16cnv">https://github.com/zurachu/pgd16cnv</a></p>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div><div class="line">    DWORD head; <span class="comment">// 識別子 &#39;PBEX&#39;（既存アプリの誤動作防止）</span></div><div class="line">    DWORD fsize; <span class="comment">// ファイル長</span></div><div class="line">    BYTE bpp; <span class="comment">// bit 深度 (4)</span></div><div class="line">    BYTE mask; <span class="comment">// マスクの bit 深度 (1)</span></div><div class="line">    <span class="keywordtype">int</span> w; <span class="comment">// X 幅 8 ピクセル単位厳守</span></div><div class="line">    <span class="keywordtype">int</span> h; <span class="comment">// Y 高さ</span></div><div class="line">    DWORD buf_size; <span class="comment">// BMP サイズ = ( bpp + mask ) * w * h / 8</span></div><div class="line">} PBMP_FILEHEADER;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div><div class="line">    PBMP_FILEHEADER header;</div><div class="line">    BYTE *buf; <span class="comment">// 4 BIT 1 ピクセル</span></div><div class="line">    BYTE *mask; <span class="comment">// 1 BIT 1 ピクセル</span></div><div class="line">} PIECE_BMP;</div></div><!-- fragment --> </div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

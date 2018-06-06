@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>zurapce: zurapce/Lcd.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">zurapce
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.13 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','検索');
+});
+</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6808de0d3b614476abd72b1d98fe57fc.html">zurapce</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">関数</a>  </div>
+  <div class="headertitle">
+<div class="title">Lcd.h ファイル</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>LCD 関連.  
+<a href="#details">[詳解]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a95cf0e448da624b00a3dcf7bb2171483"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Lcd_8h.html#a95cf0e448da624b00a3dcf7bb2171483">Lcd_Init</a> (void)</td></tr>
+<tr class="memdesc:a95cf0e448da624b00a3dcf7bb2171483"><td class="mdescLeft">&#160;</td><td class="mdescRight">画面関係の初期化.  <a href="#a95cf0e448da624b00a3dcf7bb2171483">[詳解]</a><br /></td></tr>
+<tr class="separator:a95cf0e448da624b00a3dcf7bb2171483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf828efeda0f88b6d6be73161f2edc31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Lcd_8h.html#acf828efeda0f88b6d6be73161f2edc31">Lcd_Update</a> (void)</td></tr>
+<tr class="memdesc:acf828efeda0f88b6d6be73161f2edc31"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCD 更新フラグを立てる.  <a href="#acf828efeda0f88b6d6be73161f2edc31">[詳解]</a><br /></td></tr>
+<tr class="separator:acf828efeda0f88b6d6be73161f2edc31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3763f9955f802f2bc47548559f986ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Lcd_8h.html#ab3763f9955f802f2bc47548559f986ca">Lcd_Trans</a> (void)</td></tr>
+<tr class="memdesc:ab3763f9955f802f2bc47548559f986ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">仮想画面バッファの内容を LCD に転送.  <a href="#ab3763f9955f802f2bc47548559f986ca">[詳解]</a><br /></td></tr>
+<tr class="separator:ab3763f9955f802f2bc47548559f986ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>LCD 関連. </p>
+<dl class="section author"><dt>著者</dt><dd>zurachu </dd></dl>
+</div><h2 class="groupheader">関数詳解</h2>
+<a id="a95cf0e448da624b00a3dcf7bb2171483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95cf0e448da624b00a3dcf7bb2171483">&#9670;&nbsp;</a></span>Lcd_Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Lcd_Init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>画面関係の初期化. </p>
+<p>仮想画面バッファを確保し、その領域を使用するよう設定します。 仮想画面バッファのアドレスは pceLCDSetBuffer( INVALIDPTR ) で取り出せます。 </p><dl class="section attention"><dt>注意</dt><dd><a class="el" href="Ldirect_8h.html#add8e18cd89e161465a99ee53e05fb45d" title="初期化. ">Ldirect_Init()</a> とは排他的になっているので、両方を呼び出さないようにしてください。 </dd></dl>
+<dl class="retval"><dt>戻り値</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">1</td><td>仮想画面バッファ確保成功 </td></tr>
+    <tr><td class="paramname">0</td><td>仮想画面バッファ確保失敗 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acf828efeda0f88b6d6be73161f2edc31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf828efeda0f88b6d6be73161f2edc31">&#9670;&nbsp;</a></span>Lcd_Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Lcd_Update </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>LCD 更新フラグを立てる. </p>
+
+</div>
+</div>
+<a id="ab3763f9955f802f2bc47548559f986ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3763f9955f802f2bc47548559f986ca">&#9670;&nbsp;</a></span>Lcd_Trans()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Lcd_Trans </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>仮想画面バッファの内容を LCD に転送. </p>
+<p>LCD 更新フラグが立っていなければ転送を行わないので、 毎フレーム呼び出して下さい。 </p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>
