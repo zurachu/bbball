@@ -1,2 +1,6 @@
 *.depend
 *.o
+*.map
+*.sym
+*.srf
+*.pex
