@@ -13,6 +13,6 @@ struct Player
 void Player_Init(void);
 void Player_Construct(struct Player* player);
 void Player_Update(struct Player* player);
-void Player_Draw(struct Player const* player);
+void Player_Draw(struct Player const* player, int x_offset);
 
 #endif // !defined(PLAYER_H_201806190732)

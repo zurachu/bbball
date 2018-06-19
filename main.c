@@ -1,23 +1,15 @@
 #include "zurapce/zurapce.h"
 
 #include "player.h"
+#include "stage.h"
 
 static BOOL s_initialize_succeed = FALSE;
 
 PrecisionTimer g_timer;
 unsigned long g_period_us, g_proc_us;
 
-#define BLOCK_SIZE (8)
-static unsigned short s_stage[] = {
-	0x001, 0x001, 0x001, 0x003, 0x007, 0x00F, 0x01F, 0x01F,
-	0x001, 0x001, 0x001, 0x021, 0x021, 0x021, 0x021, 0x021,
-};
-
 static struct Player g_player;
-
-static float const g_gravity_acc = 9.8;
-
-static void Stage_Draw(void);
+int g_scroll_x_offset;
 
 /// èâä˙âª.
 void pceAppInit(void)
@@ -33,7 +25,7 @@ void pceAppInit(void)
 		Player_Init();
 		Player_Construct(&g_player);
 		
-		Stage_Draw();
+		Stage_Draw(&g_stage1, 0);
 		
 		PrecisionTimer_Construct( &g_timer );
 		
@@ -54,8 +46,18 @@ void pceAppProc(int cnt)
 	
 	Player_Update(&g_player);
 	
-	Stage_Draw();
-	Player_Draw(&g_player);
+	if(pcePadGet() & PAD_RI)
+	{
+		g_scroll_x_offset++;
+	}
+	if(pcePadGet() & PAD_LF)
+	{
+		g_scroll_x_offset--;
+	}
+	g_scroll_x_offset = Stage_AdjustedScrollOffset(&g_stage1, g_scroll_x_offset);
+
+	Stage_Draw(&g_stage1, g_scroll_x_offset);
+	Player_Draw(&g_player, g_scroll_x_offset);
 	
 	pceLCDPaint(0, 0, 0, DISP_X, 8);
 	FontFuchi_SetType(2);
@@ -76,27 +78,4 @@ void pceAppExit(void)
 	FontExtend_Unhook_GetAdrs();
 	FontProxy_Unhook_Set();
 	Configure_Exit();
-}
-
-void Stage_Draw(void)
-{
-	int i;
-	
-	pceLCDPaint(0, 0, 0, DISP_X, DISP_Y);
-	
-	for(i = 0; i < DISP_X / BLOCK_SIZE; i++)
-	{
-		unsigned short vertical = s_stage[i];
-		int const x = i * BLOCK_SIZE;
-		int y = DISP_Y - BLOCK_SIZE;
-		while(0 <= y)
-		{
-			if(vertical & 1)
-			{
-				pceLCDPaint(3, x, y, BLOCK_SIZE, BLOCK_SIZE);
-			}
-			vertical >>= 1;
-			y -= BLOCK_SIZE;
-		}
-	}
 }

@@ -47,7 +47,7 @@ void Player_Update(struct Player* player)
 	player->vx = 0;
 }
 
-void Player_Draw(struct Player const* player)
+void Player_Draw(struct Player const* player, int x_offset)
 {
-	PieceBmp_Draw(&g_ball, player->x, player->y / 10, 0, 0, g_ball.header.w, g_ball.header.h, DRW_NOMAL);
+	PieceBmp_Draw(&g_ball, player->x - x_offset, player->y / 10, 0, 0, g_ball.header.w, g_ball.header.h, DRW_NOMAL);
 }
