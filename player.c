@@ -5,7 +5,7 @@
 extern unsigned char BALL[];
 static PIECE_BMP g_ball;
 
-static float const g_gravity_acc = 9.8;
+static float const g_gravity_acc_per_frame = 9.8 / 30;
 
 void Player_Init(void)
 {
@@ -31,17 +31,17 @@ void Player_Update(struct Player* player)
 	switch(player->state)
 	{
 	case 0:
-		player->vy += g_gravity_acc;
+		player->vy += g_gravity_acc_per_frame;
 		break;
 	case 1:
-		player->vy = -100;
+		player->vy = -4;
 		player->state = 0;
 		break;
 	}
 	player->y += player->vy;
-	if(player->y >= 720)
+	if(player->y >= 72)
 	{
-		player->y = 720;
+		player->y = 72;
 		player->state = 1;
 	}
 	player->vx = 0;
@@ -49,5 +49,5 @@ void Player_Update(struct Player* player)
 
 void Player_Draw(struct Player const* player, int x_offset)
 {
-	PieceBmp_Draw(&g_ball, player->x - x_offset, player->y / 10, 0, 0, g_ball.header.w, g_ball.header.h, DRW_NOMAL);
+	PieceBmp_Draw(&g_ball, player->x - x_offset, player->y, 0, 0, g_ball.header.w, g_ball.header.h, DRW_NOMAL);
 }
