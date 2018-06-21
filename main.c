@@ -44,7 +44,7 @@ void pceAppProc(int cnt)
 		pceAppReqExit(0);
 	}
 	
-	Player_Update(&g_player);
+	Player_Update(&g_player, &g_stage1);
 	
 	if(pcePadGet() & PAD_RI)
 	{

@@ -2,6 +2,13 @@
 
 #include "zurapce/zurapce.h"
 
+int Stage_Block(struct Stage const* stage, int x, int y)
+{
+	int const block_x = x / BLOCK_SIZE;
+	int const block_y = y / BLOCK_SIZE;
+	return (stage->data[block_x] >> block_y) & 1;
+}
+
 int Stage_AdjustedScrollOffset(struct Stage const* stage, int origin_x_offset)
 {
 	int const x_offset_limit = stage->length * BLOCK_SIZE - DISP_X;
