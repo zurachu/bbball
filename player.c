@@ -16,7 +16,7 @@ void Player_Init(void)
 
 void Player_Construct(struct Player* player)
 {
-	player->state = 0;
+	player->state = PlayerState_CannotControl;
 	player->x = g_ball.header.w / 2;
 	player->y = DISP_Y;
 	player->vx = 0;
@@ -25,27 +25,31 @@ void Player_Construct(struct Player* player)
 
 void Player_Update(struct Player* player, struct Stage const* stage)
 {
-	if(pcePadGet() & PAD_RI)
-	{
-		player->vx++;
-	}
-	if(pcePadGet() & PAD_LF)
-	{
-		player->vx--;
-	}
-	player->x += player->vx;
-	
 	switch(player->state)
 	{
-	case 0:
-		player->vy -= g_gravity_acc_per_frame;
+	case PlayerState_CannotControl:
 		break;
-	case 1:
-		player->vy = 4;
-		player->state = 0;
+
+	case PlayerState_Landed:
+		player->vy = 4; // TODO: ’n–Ê‚É‚æ‚Á‚Ä’µ‚Ë•û‚ð•Ï‚¦‚é
+		player->state = PlayerState_Jumping;
+		break;
+
+	case PlayerState_Jumping:
+		if(pcePadGet() & PAD_RI)
+		{
+			player->vx++;
+		}
+		if(pcePadGet() & PAD_LF)
+		{
+			player->vx--;
+		}
+		player->x += player->vx;
+		player->vx = 0;
 		break;
 	}
-	
+	player->vy -= g_gravity_acc_per_frame;
+	player->x += player->vx;
 	player->y += player->vy;
 	if(Stage_Block(stage, player->x, player->y) == 1)
 	{
@@ -54,9 +58,8 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 			player->y++;
 		}
 		while((int)player->y % BLOCK_SIZE);
-		player->state = 1;
+		player->state = PlayerState_Landed;
 	}
-	player->vx = 0;
 }
 
 void Player_Draw(struct Player const* player, int x_offset)

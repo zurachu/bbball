@@ -3,9 +3,16 @@
 
 struct Stage;
 
+enum PlayerState
+{
+	PlayerState_CannotControl,
+	PlayerState_Landed,
+	PlayerState_Jumping
+};
+
 struct Player
 {
-	int state;
+	enum PlayerState state;
 	float x;
 	float y;
 	float vx;
