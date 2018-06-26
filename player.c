@@ -7,6 +7,7 @@
 extern unsigned char BALL[];
 static PIECE_BMP g_ball;
 
+static float const g_mass = 2;
 static float const g_gravity_acc_per_frame = 9.8 / 30;
 
 void Player_Init(void)
@@ -31,7 +32,7 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 		break;
 
 	case PlayerState_Landed:
-		player->vy = 4; // TODO: ’n–Ê‚É‚æ‚Á‚Ä’µ‚Ë•û‚ð•Ï‚¦‚é
+		player->vy = g_mass * 4; // TODO: ’n–Ê‚É‚æ‚Á‚Ä’µ‚Ë•û‚ð•Ï‚¦‚é
 		player->state = PlayerState_Jumping;
 		break;
 
@@ -48,7 +49,7 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 		player->vx = 0;
 		break;
 	}
-	player->vy -= g_gravity_acc_per_frame;
+	player->vy -= g_mass * g_gravity_acc_per_frame;
 	player->x += player->vx;
 	player->y += player->vy;
 	if(Stage_Block(stage, player->x, player->y) == 1)
