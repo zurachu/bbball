@@ -26,6 +26,8 @@ void Player_Construct(struct Player* player)
 
 void Player_Update(struct Player* player, struct Stage const* stage)
 {
+	float const ball_w = g_ball.header.w;
+
 	switch(player->state)
 	{
 	case PlayerState_CannotControl:
@@ -52,7 +54,8 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 	player->vy -= g_mass * g_gravity_acc_per_frame;
 	player->x += player->vx;
 	player->y += player->vy;
-	if(Stage_Block(stage, player->x, player->y) == 1)
+	if(Stage_Block(stage, player->x - ball_w / 2, player->y) == 1
+	 || Stage_Block(stage, player->x + ball_w / 2, player->y) == 1)
 	{
 		do
 		{
