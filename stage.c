@@ -2,6 +2,8 @@
 
 #include "zurapce/zurapce.h"
 
+#include "camera.h"
+
 int Stage_Block(struct Stage const* stage, int x, int y)
 {
 	int const block_x = x / BLOCK_SIZE;
@@ -9,23 +11,10 @@ int Stage_Block(struct Stage const* stage, int x, int y)
 	return (stage->data[block_x] >> block_y) & 1;
 }
 
-int Stage_AdjustedScrollOffset(struct Stage const* stage, int origin_x_offset)
+void Stage_Draw(struct Stage const* stage, struct Camera const* camera)
 {
-	int const x_offset_limit = stage->length * BLOCK_SIZE - DISP_X;
-	if(origin_x_offset < 0 || x_offset_limit < 0)
-	{
-		return 0;
-	}
-	if(x_offset_limit < origin_x_offset)
-	{
-		return x_offset_limit;
-	}
-	return origin_x_offset;
-}
-
-void Stage_Draw(struct Stage const* stage, int x_offset)
-{
-	int block_offset = x_offset / BLOCK_SIZE;
+	int x_offset = camera->x;
+	int const block_offset = x_offset / BLOCK_SIZE;
 	int i;
 	x_offset -= block_offset * BLOCK_SIZE;
 	

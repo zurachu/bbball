@@ -3,6 +3,8 @@
 
 #define BLOCK_SIZE (8)
 
+struct Camera;
+
 struct Stage
 {
 	unsigned short const* data;
@@ -12,7 +14,6 @@ struct Stage
 extern struct Stage const g_stage1;
 
 int Stage_Block(struct Stage const* stage, int x, int y);
-int Stage_AdjustedScrollOffset(struct Stage const* stage, int origin_x_offset);
-void Stage_Draw(struct Stage const* stage, int x_offset);
+void Stage_Draw(struct Stage const* stage, struct Camera const* camera);
 
 #endif // !defined(STAGE_H_201806192305)

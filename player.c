@@ -2,6 +2,7 @@
 
 #include "zurapce/zurapce.h"
 
+#include "camera.h"
 #include "stage.h"
 
 extern unsigned char BALL[];
@@ -66,9 +67,9 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 	}
 }
 
-void Player_Draw(struct Player const* player, int x_offset)
+void Player_Draw(struct Player const* player, struct Camera const* camera)
 {
 	int const ball_w = g_ball.header.w;
 	int const ball_h = g_ball.header.h;
-	PieceBmp_Draw(&g_ball, player->x - ball_w / 2 - x_offset, DISP_Y - player->y - ball_h, 0, 0, ball_w, ball_h, DRW_NOMAL);
+	PieceBmp_Draw(&g_ball, player->x - ball_w / 2 - camera->x, DISP_Y - player->y - ball_h, 0, 0, ball_w, ball_h, DRW_NOMAL);
 }

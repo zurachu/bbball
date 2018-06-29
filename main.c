@@ -1,5 +1,6 @@
 #include "zurapce/zurapce.h"
 
+#include "camera.h"
 #include "player.h"
 #include "stage.h"
 
@@ -9,7 +10,7 @@ PrecisionTimer g_timer;
 unsigned long g_period_us, g_proc_us;
 
 static struct Player g_player;
-int g_scroll_x_offset;
+static struct Camera g_camera;
 
 /// èâä˙âª.
 void pceAppInit(void)
@@ -24,10 +25,11 @@ void pceAppInit(void)
 	{
 		Player_Init();
 		Player_Construct(&g_player);
+		Camera_Construct(&g_camera);
 		
 		Stage_Draw(&g_stage1, 0);
 		
-		PrecisionTimer_Construct( &g_timer );
+		PrecisionTimer_Construct(&g_timer);
 		
 		s_initialize_succeed = TRUE;
 	}
@@ -36,6 +38,7 @@ void pceAppInit(void)
 /// ÉÅÉCÉì.
 void pceAppProc(int cnt)
 {
+	struct Stage const* const stage = &g_stage1;
 	PrecisionTimer timer;
 	PrecisionTimer_Construct(&timer);
 
@@ -44,20 +47,11 @@ void pceAppProc(int cnt)
 		pceAppReqExit(0);
 	}
 	
-	Player_Update(&g_player, &g_stage1);
-	
-	if(pcePadGet() & PAD_RI)
-	{
-		g_scroll_x_offset++;
-	}
-	if(pcePadGet() & PAD_LF)
-	{
-		g_scroll_x_offset--;
-	}
-	g_scroll_x_offset = Stage_AdjustedScrollOffset(&g_stage1, g_scroll_x_offset);
+	Player_Update(&g_player, stage);
+	Camera_Update(&g_camera, &g_player, stage);
 
-	Stage_Draw(&g_stage1, g_scroll_x_offset);
-	Player_Draw(&g_player, g_scroll_x_offset);
+	Stage_Draw(stage, &g_camera);
+	Player_Draw(&g_player, &g_camera);
 	
 	pceLCDPaint(0, 0, 0, DISP_X, 8);
 	FontFuchi_SetType(2);
