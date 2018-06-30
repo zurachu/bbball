@@ -5,15 +5,17 @@
 #include "camera.h"
 #include "stage.h"
 
-extern unsigned char BALL[];
-static PIECE_BMP g_ball;
+extern unsigned char BALL[], ARROW[];
+static PIECE_BMP g_ball, g_arrow;
 
 static float const g_mass = 2;
 static float const g_gravity_acc_per_frame = 9.8 / 30;
+static float const g_display_upper_y_limit = 8;
 
 void Player_Init(void)
 {
 	PieceBmp_Construct(&g_ball, BALL);
+	PieceBmp_Construct(&g_arrow, ARROW);
 }
 
 void Player_Construct(struct Player* player)
@@ -69,7 +71,16 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 
 void Player_Draw(struct Player const* player, struct Camera const* camera)
 {
-	int const ball_w = g_ball.header.w;
 	int const ball_h = g_ball.header.h;
-	PieceBmp_Draw(&g_ball, player->x - ball_w / 2 - camera->x, DISP_Y - player->y - ball_h, 0, 0, ball_w, ball_h, DRW_NOMAL);
+	int const display_y = DISP_Y - player->y - ball_h;
+	if(display_y + ball_h >= g_display_upper_y_limit)
+	{
+		int const ball_w = g_ball.header.w;
+		PieceBmp_Draw(&g_ball, player->x - ball_w / 2 - camera->x, display_y, 0, 0, ball_w, ball_h, DRW_NOMAL);
+	}
+	else
+	{
+		int const arrow_w = g_arrow.header.w;
+		PieceBmp_Draw(&g_arrow, player->x - arrow_w / 2 - camera->x, g_display_upper_y_limit, 0, 0, arrow_w, g_arrow.header.h, DRW_NOMAL);
+	}
 }
