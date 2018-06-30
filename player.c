@@ -27,9 +27,38 @@ void Player_Construct(struct Player* player)
 	player->vy = 0;
 }
 
-void Player_Update(struct Player* player, struct Stage const* stage)
+static void Player_Update_Delta(struct Player* player, struct Stage const* stage, int total)
 {
 	float const ball_w = g_ball.header.w;
+	float const dvx = player->vx / total;
+	float const dvy = player->vy / total;
+	
+	player->x += dvx;
+	player->y += dvy;
+	while(Stage_Block(stage, player->x - ball_w / 2, player->y) == 1
+	 || Stage_Block(stage, player->x + ball_w / 2, player->y) == 1)
+	{
+		player->y = (int)((player->y + BLOCK_SIZE) / BLOCK_SIZE) * BLOCK_SIZE;
+		player->state = PlayerState_Landed;
+		player->vy = 0;
+	}
+}
+
+static int Max(int a, int b)
+{
+	return a > b ? a : b;
+}
+
+static int RequiredDeltaCount(struct Player* player)
+{
+	int const vx_count = abs(player->vx);
+	int const vy_count = abs(player->vy);
+	return Max(1, Max(vx_count, vy_count));
+}
+
+void Player_Update(struct Player* player, struct Stage const* stage)
+{
+	int i, delta_count;
 
 	switch(player->state)
 	{
@@ -55,17 +84,10 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 		break;
 	}
 	player->vy -= g_mass * g_gravity_acc_per_frame;
-	player->x += player->vx;
-	player->y += player->vy;
-	if(Stage_Block(stage, player->x - ball_w / 2, player->y) == 1
-	 || Stage_Block(stage, player->x + ball_w / 2, player->y) == 1)
+	delta_count = RequiredDeltaCount(player);
+	for(i = 0; i < delta_count; i++)
 	{
-		do
-		{
-			player->y++;
-		}
-		while((int)player->y % BLOCK_SIZE);
-		player->state = PlayerState_Landed;
+		Player_Update_Delta(player, stage, delta_count);
 	}
 }
 
