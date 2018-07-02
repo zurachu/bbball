@@ -52,12 +52,21 @@ static void Player_Update_Delta(struct Player* player, struct Stage const* stage
 		player->vx = -player->vx;
 	}
 
-	while(Stage_Block(stage, player->x - ball_w / 2, player->y) == 1
+	if(Stage_Block(stage, player->x - ball_w / 2, player->y + ball_h) == 1
+	 || Stage_Block(stage, player->x + ball_w / 2, player->y + ball_h) == 1)
+	{
+		float const block_bottom_y = (int)(player->y / BLOCK_SIZE + 1) * BLOCK_SIZE;
+		player->y += (block_bottom_y - (player->y + ball_h)) * 2;
+		player->vy = -player->vy;
+	}
+
+	if(Stage_Block(stage, player->x - ball_w / 2, player->y) == 1
 	 || Stage_Block(stage, player->x + ball_w / 2, player->y) == 1)
 	{
-		player->y = (int)((player->y + BLOCK_SIZE) / BLOCK_SIZE) * BLOCK_SIZE;
+		float const block_top_y = (int)(player->y / BLOCK_SIZE + 1) * BLOCK_SIZE;
+		player->y = block_top_y;
 		player->state = PlayerState_Landed;
-		player->vx = player->vy = 0;
+		player->vy = 0;
 	}
 }
 
