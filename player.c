@@ -30,17 +30,34 @@ void Player_Construct(struct Player* player)
 static void Player_Update_Delta(struct Player* player, struct Stage const* stage, int total)
 {
 	float const ball_w = g_ball.header.w;
+	float const ball_h = g_ball.header.h;
 	float const dvx = player->vx / total;
 	float const dvy = player->vy / total;
 	
 	player->x += dvx;
 	player->y += dvy;
+
+	if(Stage_Block(stage, player->x - ball_w / 2, player->y + ball_h / 2) == 1)
+	{
+		float const block_right_x = (int)(player->x / BLOCK_SIZE) * BLOCK_SIZE;
+		player->x += (block_right_x - (player->x - ball_w / 2)) * 2;
+		player->state = PlayerState_CannotControl;
+		player->vx = -player->vx;
+	}
+	else if(Stage_Block(stage, player->x + ball_w / 2, player->y + ball_h / 2) == 1)
+	{
+		float const block_left_x = (int)(player->x / BLOCK_SIZE + 1) * BLOCK_SIZE;
+		player->x += (block_left_x - (player->x + ball_w / 2)) * 2;
+		player->state = PlayerState_CannotControl;
+		player->vx = -player->vx;
+	}
+
 	while(Stage_Block(stage, player->x - ball_w / 2, player->y) == 1
 	 || Stage_Block(stage, player->x + ball_w / 2, player->y) == 1)
 	{
 		player->y = (int)((player->y + BLOCK_SIZE) / BLOCK_SIZE) * BLOCK_SIZE;
 		player->state = PlayerState_Landed;
-		player->vy = 0;
+		player->vx = player->vy = 0;
 	}
 }
 
@@ -73,14 +90,16 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 	case PlayerState_Jumping:
 		if(pcePadGet() & PAD_RI)
 		{
-			player->vx++;
+			player->vx = 1;
 		}
-		if(pcePadGet() & PAD_LF)
+		else if(pcePadGet() & PAD_LF)
 		{
-			player->vx--;
+			player->vx = -1;
 		}
-		player->x += player->vx;
-		player->vx = 0;
+		else
+		{
+			player->vx = 0;
+		}
 		break;
 	}
 	player->vy -= g_mass * g_gravity_acc_per_frame;
