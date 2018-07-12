@@ -9,7 +9,6 @@ extern unsigned char BALL[], ARROW[];
 static PIECE_BMP g_ball, g_arrow;
 
 static float const g_mass = 2;
-static float const g_gravity_acc_per_frame = 9.8 / 30;
 static float const g_display_upper_y_limit = 8;
 
 void Player_Init(void)
@@ -84,6 +83,7 @@ static int RequiredDeltaCount(struct Player* player)
 
 void Player_Update(struct Player* player, struct Stage const* stage)
 {
+	float const gravity_acc_per_frame = 9.8 / (1000.0 / pceAppSetProcPeriod(INVALIDVAL));
 	int i, delta_count;
 
 	switch(player->state)
@@ -111,7 +111,7 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 		}
 		break;
 	}
-	player->vy -= g_mass * g_gravity_acc_per_frame;
+	player->vy -= g_mass * gravity_acc_per_frame;
 	delta_count = RequiredDeltaCount(player);
 	for(i = 0; i < delta_count; i++)
 	{
