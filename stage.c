@@ -8,6 +8,10 @@ int Stage_Block(struct Stage const* stage, int x, int y)
 {
 	int const block_x = x / BLOCK_SIZE;
 	int const block_y = y / BLOCK_SIZE;
+	if(block_y < 0)
+	{
+		return 0;
+	}
 	return (stage->data[block_x] >> block_y) & 1;
 }
 

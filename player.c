@@ -17,13 +17,19 @@ void Player_Init(void)
 	PieceBmp_Construct(&g_arrow, ARROW);
 }
 
-void Player_Construct(struct Player* player)
+static void Player_StartFreeFallFromTop(struct Player* player, float x)
 {
 	player->state = PlayerState_CannotControl;
-	player->x = g_ball.header.w / 2;
+	player->x = x;
 	player->y = DISP_Y;
 	player->vx = 0;
 	player->vy = 0;
+	player->last_landed_x = x;
+}
+
+void Player_Construct(struct Player* player)
+{
+	Player_StartFreeFallFromTop(player, g_ball.header.w / 2);
 }
 
 static void Player_Update_Delta(struct Player* player, struct Stage const* stage, int total)
@@ -92,6 +98,7 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 		break;
 
 	case PlayerState_Landed:
+		player->last_landed_x = player->x;
 		player->vy = g_mass * 4; // TODO: 地面によって跳ね方を変える
 		player->state = PlayerState_Jumping;
 		break;
@@ -116,6 +123,12 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 	for(i = 0; i < delta_count; i++)
 	{
 		Player_Update_Delta(player, stage, delta_count);
+	}
+
+	if(player->y < -BLOCK_SIZE * 2)
+	{
+		Player_StartFreeFallFromTop(player, player->last_landed_x);
+		// TODO: タイマー罰も加えたい
 	}
 }
 

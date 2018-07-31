@@ -18,6 +18,7 @@ struct Player
 	float y;
 	float vx;
 	float vy;
+	float last_landed_x;
 };
 
 void Player_Init(void);
