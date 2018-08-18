@@ -9,10 +9,13 @@ struct Stage
 {
 	unsigned short const* data;
 	int length;
+	int goal_x;
+	int goal_y;
 };
 
 extern struct Stage const g_stage1;
 
+void Stage_Init(void);
 int Stage_Block(struct Stage const* stage, int x, int y);
 void Stage_Draw(struct Stage const* stage, struct Camera const* camera);
 

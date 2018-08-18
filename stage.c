@@ -4,6 +4,14 @@
 
 #include "camera.h"
 
+extern unsigned char GOAL[];
+static PIECE_BMP g_goal;
+
+void Stage_Init(void)
+{
+	PieceBmp_Construct(&g_goal, GOAL);
+}
+
 int Stage_Block(struct Stage const* stage, int x, int y)
 {
 	int const block_x = x / BLOCK_SIZE;
@@ -13,6 +21,14 @@ int Stage_Block(struct Stage const* stage, int x, int y)
 		return 0;
 	}
 	return (stage->data[block_x] >> block_y) & 1;
+}
+
+static void Goal_Draw(struct Stage const* stage, struct Camera const* camera)
+{
+	int const goal_h = g_goal.header.h;
+	int const goal_x = stage->goal_x * BLOCK_SIZE - camera->x;
+	int const goal_y = DISP_Y - stage->goal_y * BLOCK_SIZE - goal_h;
+	PieceBmp_Draw(&g_goal, goal_x, goal_y, 0, 0, g_goal.header.w, goal_h, DRW_NOMAL);
 }
 
 void Stage_Draw(struct Stage const* stage, struct Camera const* camera)
@@ -39,4 +55,6 @@ void Stage_Draw(struct Stage const* stage, struct Camera const* camera)
 			y -= BLOCK_SIZE;
 		}
 	}
+
+	Goal_Draw(stage, camera);
 }

@@ -8,5 +8,6 @@ static unsigned short s_stage_data[] = {
 
 struct Stage const g_stage1 = {
 	s_stage_data,
-	sizeof(s_stage_data) / sizeof(s_stage_data[0])
+	sizeof(s_stage_data) / sizeof(s_stage_data[0]),
+	21, 0
 };

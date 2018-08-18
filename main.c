@@ -26,6 +26,7 @@ void pceAppInit(void)
 	if(Lcd_Init())
 	{
 		Player_Init();
+		Stage_Init();
 		Player_Construct(&g_player);
 		Camera_Construct(&g_camera);
 		Timer_Construct(&g_timer);
