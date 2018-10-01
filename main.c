@@ -1,18 +1,13 @@
 #include "zurapce/zurapce.h"
 
-#include "camera.h"
+#include "in_game.h"
 #include "player.h"
 #include "stage.h"
-#include "timer.h"
 
 static BOOL s_initialize_succeed = FALSE;
 
 PrecisionTimer g_precision_timer;
 unsigned long g_period_us, g_proc_us;
-
-static struct Player g_player;
-static struct Camera g_camera;
-static struct Timer g_timer;
 
 /// èâä˙âª.
 void pceAppInit(void)
@@ -27,11 +22,7 @@ void pceAppInit(void)
 	{
 		Player_Init();
 		Stage_Init();
-		Player_Construct(&g_player);
-		Camera_Construct(&g_camera);
-		Timer_Construct(&g_timer);
-		
-		Stage_Draw(&g_stage1, 0);
+		InGame_Init(&g_stage1);
 		
 		PrecisionTimer_Construct(&g_precision_timer);
 		
@@ -42,7 +33,6 @@ void pceAppInit(void)
 /// ÉÅÉCÉì.
 void pceAppProc(int cnt)
 {
-	struct Stage const* const stage = &g_stage1;
 	PrecisionTimer proc_timer;
 	PrecisionTimer_Construct(&proc_timer);
 	
@@ -51,15 +41,8 @@ void pceAppProc(int cnt)
 		pceAppReqExit(0);
 	}
 	
-	Player_Update(&g_player, stage);
-	Camera_Update(&g_camera, &g_player, stage);
-	Timer_Update(&g_timer);
-	
-	Stage_Draw(stage, &g_camera);
-	Player_Draw(&g_player, &g_camera);
-	
-	pceLCDPaint(0, 0, 0, DISP_X, 8);
-	Timer_Draw(&g_timer);
+	InGame_Update();
+	InGame_Draw();
 	
 	Lcd_Update();
 	Lcd_Trans();
