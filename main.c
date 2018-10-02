@@ -11,7 +11,6 @@ static unsigned long g_period_us, g_proc_us;
 static enum GameMode
 {
 	GameMode_Uninitialized,
-	GameMode_Initialized,
 	GameMode_Title,
 	GameMode_InGame,
 } g_game_mode = GameMode_Uninitialized;
@@ -29,10 +28,11 @@ void pceAppInit(void)
 	{
 		Player_Init();
 		Stage_Init();
+		Title_Init();
+		Title_Draw();
+		g_game_mode = GameMode_Title;
 		
 		PrecisionTimer_Construct(&g_precision_timer);
-		
-		g_game_mode = GameMode_Initialized;
 	}
 }
 
@@ -51,10 +51,6 @@ void pceAppProc(int cnt)
 	{
 	case GameMode_Uninitialized:
 		break;
-	case GameMode_Initialized:
-		Title_Init();
-		g_game_mode = GameMode_Title;
-		break;
 	case GameMode_Title:
 		Title_Update();
 		break;
@@ -66,9 +62,6 @@ void pceAppProc(int cnt)
 	switch(g_game_mode)
 	{
 	case GameMode_Uninitialized:
-		break;
-	case GameMode_Initialized:
-		pceLCDPaint(0, 0, 0, DISP_X, DISP_Y);
 		break;
 	case GameMode_Title:
 		Title_Draw();
