@@ -87,7 +87,7 @@ static int RequiredDeltaCount(struct Player* player)
 	return Max(1, Max(vx_count, vy_count));
 }
 
-void Player_Update(struct Player* player, struct Stage const* stage)
+void Player_Update(struct Player* player, unsigned long pad, struct Stage const* stage)
 {
 	float const gravity_acc_per_frame = 9.8 / (1000.0 / pceAppSetProcPeriod(INVALIDVAL));
 	int i, delta_count;
@@ -104,11 +104,11 @@ void Player_Update(struct Player* player, struct Stage const* stage)
 		break;
 
 	case PlayerState_Jumping:
-		if(pcePadGet() & PAD_RI)
+		if(pad & PAD_RI)
 		{
 			player->vx = 1;
 		}
-		else if(pcePadGet() & PAD_LF)
+		else if(pad & PAD_LF)
 		{
 			player->vx = -1;
 		}
@@ -136,12 +136,9 @@ void Player_Draw(struct Player const* player, struct Camera const* camera)
 {
 	int const ball_h = g_ball.header.h;
 	int const display_y = DISP_Y - player->y - ball_h;
-	if(display_y + ball_h >= g_display_upper_y_limit)
-	{
-		int const ball_w = g_ball.header.w;
-		PieceBmp_Draw(&g_ball, player->x - ball_w / 2 - camera->x, display_y, 0, 0, ball_w, ball_h, DRW_NOMAL);
-	}
-	else
+	int const ball_w = g_ball.header.w;
+	PieceBmp_Draw(&g_ball, player->x - ball_w / 2 - camera->x, display_y, 0, 0, ball_w, ball_h, DRW_NOMAL);
+	if(display_y + ball_h < g_display_upper_y_limit)
 	{
 		int const arrow_w = g_arrow.header.w;
 		PieceBmp_Draw(&g_arrow, player->x - arrow_w / 2 - camera->x, g_display_upper_y_limit, 0, 0, arrow_w, g_arrow.header.h, DRW_NOMAL);

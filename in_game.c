@@ -22,8 +22,9 @@ void InGame_Init(struct Stage const* stage)
 
 void InGame_Update(void)
 {
-	Player_Update(&g_player, g_stage);
-	Camera_Update(&g_camera, &g_player, g_stage);
+	unsigned long const pad = pcePadGet();
+	Player_Update(&g_player, pad, g_stage);
+	Camera_Update(&g_camera, pad, &g_player, g_stage);
 	Timer_Update(&g_timer);
 }
 

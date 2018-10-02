@@ -11,18 +11,18 @@ void Camera_Construct(struct Camera* camera)
 	camera->last_direction = PAD_RI;
 }
 
-void Camera_Update(struct Camera* camera, struct Player const* player, struct Stage const* stage)
+void Camera_Update(struct Camera* camera, unsigned long pad, struct Player const* player, struct Stage const* stage)
 {
 	int const x_limit = stage->length * BLOCK_SIZE - DISP_X;
 	int x = camera->x;
 	unsigned long last_direction = camera->last_direction;
 	int target_x = player->x - DISP_X / 2;
 	
-	if(pcePadGet() & PAD_RI)
+	if(pad & PAD_RI)
 	{
 		last_direction = PAD_RI;
 	}
-	if(pcePadGet() & PAD_LF)
+	if(pad & PAD_LF)
 	{
 		last_direction = PAD_LF;
 	}

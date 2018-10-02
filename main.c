@@ -1,13 +1,20 @@
 #include "zurapce/zurapce.h"
 
+#include "title.h"
 #include "in_game.h"
 #include "player.h"
 #include "stage.h"
 
-static BOOL s_initialize_succeed = FALSE;
+static PrecisionTimer g_precision_timer;
+static unsigned long g_period_us, g_proc_us;
 
-PrecisionTimer g_precision_timer;
-unsigned long g_period_us, g_proc_us;
+static enum GameMode
+{
+	GameMode_Uninitialized,
+	GameMode_Initialized,
+	GameMode_Title,
+	GameMode_InGame,
+} g_game_mode = GameMode_Uninitialized;
 
 /// èâä˙âª.
 void pceAppInit(void)
@@ -22,11 +29,10 @@ void pceAppInit(void)
 	{
 		Player_Init();
 		Stage_Init();
-		InGame_Init(&g_stage1);
 		
 		PrecisionTimer_Construct(&g_precision_timer);
 		
-		s_initialize_succeed = TRUE;
+		g_game_mode = GameMode_Initialized;
 	}
 }
 
@@ -36,13 +42,41 @@ void pceAppProc(int cnt)
 	PrecisionTimer proc_timer;
 	PrecisionTimer_Construct(&proc_timer);
 	
-	if(!s_initialize_succeed || pcePadGet() & TRG_D)
+	if(g_game_mode == GameMode_Uninitialized || pcePadGet() & TRG_D)
 	{
 		pceAppReqExit(0);
 	}
 	
-	InGame_Update();
-	InGame_Draw();
+	switch(g_game_mode)
+	{
+	case GameMode_Uninitialized:
+		break;
+	case GameMode_Initialized:
+		Title_Init();
+		g_game_mode = GameMode_Title;
+		break;
+	case GameMode_Title:
+		Title_Update();
+		break;
+	case GameMode_InGame:
+		InGame_Update();
+		break;
+	}
+
+	switch(g_game_mode)
+	{
+	case GameMode_Uninitialized:
+		break;
+	case GameMode_Initialized:
+		pceLCDPaint(0, 0, 0, DISP_X, DISP_Y);
+		break;
+	case GameMode_Title:
+		Title_Draw();
+		break;
+	case GameMode_InGame:
+		InGame_Draw();
+		break;
+	}
 	
 	Lcd_Update();
 	Lcd_Trans();
