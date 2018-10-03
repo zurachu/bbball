@@ -126,7 +126,7 @@ $(ZURAPCE_LIBRARY) :
 pex : $(IMAGE)
 
 $(IMAGE) : $(TARGET) $(ICON)
-	ppack -e $< -o$@ -n$(CAPTION) -i$(ICON)
+	ppack -e $< -o$@ -n"$(CAPTION)" -i$(ICON)
 
 #=======================================
 # クリーンアップ
