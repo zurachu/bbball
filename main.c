@@ -1,5 +1,6 @@
 #include "zurapce/zurapce.h"
 
+#include "game_mode.h"
 #include "title.h"
 #include "in_game.h"
 #include "player.h"
@@ -7,13 +8,6 @@
 
 static PrecisionTimer g_precision_timer;
 static unsigned long g_period_us, g_proc_us;
-
-static enum GameMode
-{
-	GameMode_Uninitialized,
-	GameMode_Title,
-	GameMode_InGame,
-} g_game_mode = GameMode_Uninitialized;
 
 /// èâä˙âª.
 void pceAppInit(void)
@@ -30,7 +24,6 @@ void pceAppInit(void)
 		Stage_Init();
 		Title_Init();
 		Title_Draw();
-		g_game_mode = GameMode_Title;
 		
 		PrecisionTimer_Construct(&g_precision_timer);
 	}

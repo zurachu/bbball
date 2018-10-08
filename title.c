@@ -2,6 +2,7 @@
 
 #include "zurapce/zurapce.h"
 
+#include "game_mode.h"
 #include "stage.h"
 #include "player.h"
 #include "camera.h"
@@ -45,6 +46,13 @@ static struct TextAnimation
 };
 static int g_text_animation_frame_count;
 static int const s_text_animation_frames = 10;
+static int g_button_blink_animation_frame_count;
+static int const s_button_blink_animation_frames = 16;
+
+static int TextAnimationIsEnded(void)
+{
+	return g_text_animation_frame_count >= s_text_animation_frames;
+}
 
 void Title_Init(void)
 {
@@ -52,6 +60,8 @@ void Title_Init(void)
 	Camera_Construct(&g_camera);
 	
 	g_text_animation_frame_count = 0;
+	g_button_blink_animation_frame_count = 0;
+	g_game_mode = GameMode_Title;
 }
 
 void Title_Update(void)
@@ -65,9 +75,21 @@ void Title_Update(void)
 	}
 	Camera_Update(&g_camera, s_pad, &g_player, &s_stage);
 
-	if(g_text_animation_frame_count < s_text_animation_frames)
+	if(TextAnimationIsEnded())
+	{
+		if(++g_button_blink_animation_frame_count >= s_button_blink_animation_frames)
+		{
+			g_button_blink_animation_frame_count = 0;
+		}
+	}
+	else
 	{
 		g_text_animation_frame_count++;
+	}
+
+	if(pcePadGet() & TRG_A)
+	{
+		// stage select
 	}
 }
 
@@ -87,5 +109,12 @@ void Title_Draw(void)
 		FontFuchi_SetType(animation->type);
 		FontFuchi_SetPos(x, animation->y);
 		FontFuchi_PutStr(animation->text);
+	}
+
+	if(TextAnimationIsEnded() && g_button_blink_animation_frame_count < s_button_blink_animation_frames / 2)
+	{
+		FontFuchi_SetType(2);
+		FontFuchi_SetPos(38, 70);
+		FontFuchi_PutStr("PUSH A BUTTON");
 	}
 }
