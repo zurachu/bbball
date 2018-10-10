@@ -5,6 +5,7 @@ enum GameMode
 {
 	GameMode_Uninitialized,
 	GameMode_Title,
+	GameMode_StageSelect,
 	GameMode_InGame,
 };
 extern enum GameMode g_game_mode;

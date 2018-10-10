@@ -2,6 +2,7 @@
 
 #include "zurapce/zurapce.h"
 
+#include "game_mode.h"
 #include "camera.h"
 #include "player.h"
 #include "stage.h"
@@ -18,6 +19,7 @@ void InGame_Init(struct Stage const* stage)
 	Player_Construct(&g_player);
 	Camera_Construct(&g_camera);
 	Timer_Construct(&g_timer);
+	g_game_mode = GameMode_InGame;
 }
 
 void InGame_Update(void)

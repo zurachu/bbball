@@ -1,5 +1,7 @@
 #include "stage.h"
 
+#include "ArraySize.h"
+
 static unsigned short s_stage_data[] = {
 	0x001, 0x001, 0x001, 0x003, 0x007, 0x00F, 0x01F, 0x01F,
 	0x001, 0x001, 0x001, 0x000, 0x000, 0x021, 0x021, 0x021,
@@ -8,6 +10,6 @@ static unsigned short s_stage_data[] = {
 
 struct Stage const g_stage1 = {
 	s_stage_data,
-	sizeof(s_stage_data) / sizeof(s_stage_data[0]),
+	ARRAY_SIZE(s_stage_data),
 	21, 0
 };

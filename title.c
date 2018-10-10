@@ -2,7 +2,9 @@
 
 #include "zurapce/zurapce.h"
 
+#include "ArraySize.h"
 #include "game_mode.h"
+#include "stage_select.h"
 #include "stage.h"
 #include "player.h"
 #include "camera.h"
@@ -13,7 +15,7 @@ static unsigned short s_stage_data[] = {
 	STAGE_ONE_LOOP
 	STAGE_ONE_LOOP
 };
-#define STAGE_LENGTH (sizeof(s_stage_data) / sizeof(s_stage_data[0]))
+#define STAGE_LENGTH (ARRAY_SIZE(s_stage_data))
 static struct Stage const s_stage = {
 	s_stage_data,
 	STAGE_LENGTH,
@@ -89,7 +91,7 @@ void Title_Update(void)
 
 	if(pcePadGet() & TRG_A)
 	{
-		// stage select
+		StageSelect_Init();
 	}
 }
 

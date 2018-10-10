@@ -2,6 +2,7 @@
 
 #include "game_mode.h"
 #include "title.h"
+#include "stage_select.h"
 #include "in_game.h"
 #include "player.h"
 #include "stage.h"
@@ -47,6 +48,9 @@ void pceAppProc(int cnt)
 	case GameMode_Title:
 		Title_Update();
 		break;
+	case GameMode_StageSelect:
+		StageSelect_Update();
+		break;
 	case GameMode_InGame:
 		InGame_Update();
 		break;
@@ -58,6 +62,9 @@ void pceAppProc(int cnt)
 		break;
 	case GameMode_Title:
 		Title_Draw();
+		break;
+	case GameMode_StageSelect:
+		StageSelect_Draw();
 		break;
 	case GameMode_InGame:
 		InGame_Draw();
