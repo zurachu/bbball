@@ -23,6 +23,13 @@ int Stage_Block(struct Stage const* stage, int x, int y)
 	return (stage->data[block_x] >> block_y) & 1;
 }
 
+int Stage_Goal(struct Stage const* stage, int x, int y)
+{
+	int const block_x = x / BLOCK_SIZE;
+	int const block_y = y / BLOCK_SIZE;
+	return block_x == stage->goal_x && block_y == stage->goal_y;
+}
+
 static void Goal_Draw(struct Stage const* stage, struct Camera const* camera)
 {
 	int const goal_h = g_goal.header.h;

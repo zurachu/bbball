@@ -42,6 +42,11 @@ static void Player_Update_Delta(struct Player* player, struct Stage const* stage
 	player->x += dvx;
 	player->y += dvy;
 
+	if(player->state == PlayerState_Goal)
+	{
+		return;
+	}
+
 	if(Stage_Block(stage, player->x - ball_w / 2, player->y + ball_h / 2) == 1)
 	{
 		float const block_right_x = (int)(player->x / BLOCK_SIZE) * BLOCK_SIZE;
@@ -70,7 +75,14 @@ static void Player_Update_Delta(struct Player* player, struct Stage const* stage
 	{
 		float const block_top_y = (int)(player->y / BLOCK_SIZE + 1) * BLOCK_SIZE;
 		player->y = block_top_y;
-		player->state = PlayerState_Landed;
+		if(Stage_Goal(stage, player->x, player->y - ball_h / 2))
+		{
+			player->state = PlayerState_Goal;
+		}
+		else
+		{
+			player->state = PlayerState_Landed;
+		}
 		player->vy = 0;
 	}
 }
@@ -117,7 +129,10 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 			player->vx = 0;
 		}
 		break;
+	case PlayerState_Goal:
+		return;
 	}
+	
 	player->vy -= g_mass * gravity_acc_per_frame;
 	delta_count = RequiredDeltaCount(player);
 	for(i = 0; i < delta_count; i++)
@@ -128,7 +143,6 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 	if(player->y < -BLOCK_SIZE * 2)
 	{
 		Player_StartFreeFallFromTop(player, player->last_landed_x);
-		// TODO: タイマー罰も加えたい
 	}
 }
 

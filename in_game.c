@@ -56,7 +56,10 @@ void InGame_Update(void)
 	
 	Player_Update(&g_player, pad, g_stage);
 	Camera_Update(&g_camera, pad, &g_player, g_stage);
-	Timer_Update(&g_timer);
+	if(g_player.state != PlayerState_Goal)
+	{
+		Timer_Update(&g_timer);
+	}
 }
 
 void InGame_Draw(void)

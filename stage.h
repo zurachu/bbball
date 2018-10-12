@@ -17,6 +17,7 @@ extern struct Stage const g_stage1;
 
 void Stage_Init(void);
 int Stage_Block(struct Stage const* stage, int x, int y);
+int Stage_Goal(struct Stage const* stage, int x, int y);
 void Stage_Draw(struct Stage const* stage, struct Camera const* camera);
 void Stage_DrawForStageSelect(struct Stage const* stage, int center_x, int center_y);
 

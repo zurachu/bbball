@@ -8,7 +8,8 @@ enum PlayerState
 {
 	PlayerState_CannotControl,
 	PlayerState_Landed,
-	PlayerState_Jumping
+	PlayerState_Jumping,
+	PlayerState_Goal
 };
 
 struct Player
