@@ -10,6 +10,7 @@
 #include "player.h"
 #include "stage.h"
 #include "timer.h"
+#include "pad_log.h"
 
 static struct Stage const* g_stage;
 static struct Player g_player;
@@ -35,6 +36,7 @@ void InGame_Init(struct Stage const* stage)
 	g_stage = stage;
 	Player_Construct(&g_player);
 	Camera_Construct(&g_camera);
+	PadLog_Construct(&g_logging_pad_log);
 	Timer_Construct(&g_timer);
 	g_start_countdown_frame_count = 0;
 	g_game_mode = GameMode_InGame;
@@ -58,6 +60,7 @@ void InGame_Update(void)
 	Camera_Update(&g_camera, pad, &g_player, g_stage);
 	if(g_player.state != PlayerState_Goal)
 	{
+		PadLog_Update(&g_logging_pad_log, pad);
 		Timer_Update(&g_timer);
 	}
 }
