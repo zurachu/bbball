@@ -94,3 +94,10 @@ void Stage_DrawForStageSelect(struct Stage const* stage, int center_x, int cente
 		}
 	}
 }
+
+unsigned long Stage_CRC(struct Stage const* stage)
+{
+	unsigned long const len = stage->length * sizeof(stage->data[0]);
+	pceCRC32(NULL, 0);
+	return pceCRC32(stage->data, len);
+}
