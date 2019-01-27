@@ -2,6 +2,8 @@
 
 #include "zurapce/zurapce.h"
 
+#include "ArraySize.h"
+
 #include "camera.h"
 #include "stage.h"
 
@@ -29,7 +31,28 @@ static void Player_StartFreeFallFromTop(struct Player* player, float x)
 
 void Player_Construct(struct Player* player)
 {
+	int i;
+	
 	Player_StartFreeFallFromTop(player, g_ball.header.w / 2);
+
+	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
+	{
+		Particle_Construct(&player->particles[i]);
+	}
+}
+
+static void Player_Particle_Start(struct Player* player, int count)
+{
+	int i;
+	for(i = 0; i < ARRAY_SIZE(player->particles) && 0 < count; i++)
+	{
+		struct Particle* const particle = &player->particles[i];
+		if(!Particle_IsActive(particle))
+		{
+			Particle_Start(particle, player);
+			count--;
+		}
+	}
 }
 
 static void Player_Update_Delta(struct Player* player, struct Stage const* stage, int total)
@@ -42,7 +65,8 @@ static void Player_Update_Delta(struct Player* player, struct Stage const* stage
 	player->x += dvx;
 	player->y += dvy;
 
-	if(player->state == PlayerState_Goal)
+	if(player->state == PlayerState_Landed
+		|| player->state == PlayerState_Goal)
 	{
 		return;
 	}
@@ -78,10 +102,12 @@ static void Player_Update_Delta(struct Player* player, struct Stage const* stage
 		if(Stage_Goal(stage, player->x, player->y - ball_h / 2))
 		{
 			player->state = PlayerState_Goal;
+			Player_Particle_Start(player, ARRAY_SIZE(player->particles));
 		}
 		else
 		{
 			player->state = PlayerState_Landed;
+			Player_Particle_Start(player, 4);
 		}
 		player->vy = 0;
 	}
@@ -103,7 +129,12 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 {
 	float const gravity_acc_per_frame = 9.8 / (1000.0 / pceAppSetProcPeriod(INVALIDVAL));
 	int i, delta_count;
-
+	
+	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
+	{
+		Particle_Update(&player->particles[i]);
+	}
+	
 	switch(player->state)
 	{
 	case PlayerState_CannotControl:
@@ -152,11 +183,18 @@ void Player_Draw(struct Player const* player, struct Camera const* camera)
 	int const display_y = DISP_Y - player->y - ball_h;
 	int const ball_w = g_ball.header.w;
 	int const display_x = player->x - ball_w / 2 - camera->x;
+	int i;
+	
 	PieceBmp_Draw(&g_ball, display_x, display_y, 0, 0, ball_w, ball_h, DRW_NOMAL);
 	if(display_y + ball_h < g_display_upper_y_limit)
 	{
 		int const arrow_w = g_arrow.header.w;
 		int const arrow_display_x = player->x - arrow_w / 2 - camera->x;
 		PieceBmp_Draw(&g_arrow, arrow_display_x, g_display_upper_y_limit, 0, 0, arrow_w, g_arrow.header.h, DRW_NOMAL);
+	}
+	
+	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
+	{
+		Particle_Draw(&player->particles[i], camera);
 	}
 }

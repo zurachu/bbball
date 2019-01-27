@@ -1,6 +1,10 @@
 #if !defined(PLAYER_H_201806190732)
 #define PLAYER_H_201806190732
 
+#include "particle.h"
+
+#define NUM_PLAYER_PARTICLES (32)
+
 struct Stage;
 struct Camera;
 
@@ -20,6 +24,7 @@ struct Player
 	float vx;
 	float vy;
 	float last_landed_x;
+	struct Particle particles[NUM_PLAYER_PARTICLES];
 };
 
 void Player_Init(void);
