@@ -58,6 +58,7 @@ int PadLog_IsCompatible(struct PadLog const* pad_log, struct Stage const* stage,
 
 void PadLog_Copy(struct PadLog* dst_pad_log, struct PadLog const* src_pad_log)
 {
+	dst_pad_log->version = src_pad_log->version;
 	dst_pad_log->stage_number = src_pad_log->stage_number;
 	dst_pad_log->stage_crc = src_pad_log->stage_crc;
 	dst_pad_log->total_frame = src_pad_log->total_frame;
