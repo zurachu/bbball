@@ -11,6 +11,7 @@ struct PadLog g_logging_pad_log;
 
 void PadLog_Construct(struct PadLog* pad_log, struct Stage const* stage, int stage_number)
 {
+	pad_log->version = PAD_LOG_VERSION;
 	pad_log->stage_number = stage_number;
 	pad_log->stage_crc = Stage_CRC(stage);
 	pad_log->total_frame = 0;
@@ -46,6 +47,13 @@ unsigned long PadLog_Get(struct PadLog const* pad_log, int current_frame)
 	}
 
 	return pad | ((~previous_pad & pad) << 8);
+}
+
+int PadLog_IsCompatible(struct PadLog const* pad_log, struct Stage const* stage, int stage_number)
+{
+	return pad_log->version == PAD_LOG_VERSION
+		&& pad_log->stage_number == stage_number
+		&& pad_log->stage_crc == Stage_CRC(stage);
 }
 
 void PadLog_Copy(struct PadLog* dst_pad_log, struct PadLog const* src_pad_log)
