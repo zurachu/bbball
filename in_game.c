@@ -106,6 +106,7 @@ void InGame_Update(void)
 		if(pcePadGet() & TRG_A)
 		{
 			PadLog_Copy(&g_replay_pad_log, &g_logging_pad_log);
+			PadLog_WriteFile(&g_replay_pad_log);
 			StageSelect_Init();
 		}
 	}

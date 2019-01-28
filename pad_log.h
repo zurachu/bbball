@@ -24,4 +24,8 @@ unsigned long PadLog_Get(struct PadLog const* pad_log, int current_frame);
 int PadLog_IsCompatible(struct PadLog const* pad_log, struct Stage const* stage, int stage_number);
 void PadLog_Copy(struct PadLog* dst_pad_log, struct PadLog const* src_pad_log);
 
+int PadLog_StageNumberFromFileName(char const* filename);
+int PadLog_ReadFile(struct PadLog* pad_log, struct Stage const* stage, int stage_number);
+int PadLog_WriteFile(struct PadLog const* pad_log);
+
 #endif // !defined(PAD_LOG_H_201810130037)
