@@ -44,14 +44,13 @@ void StageSelect_Update(void)
 		if(pcePadGet() & TRG_A)
 		{
 			struct Stage const* const stage = s_stages[g_selected_stage_index];
-			int const stage_number = g_selected_stage_index + 1;
-			if(PadLog_IsCompatible(&g_replay_pad_log, stage, stage_number))
+			if(PadLog_IsCompatible(&g_replay_pad_log, stage, g_selected_stage_index))
 			{
-				InGame_InitVersusGhost(stage, stage_number);
+				InGame_InitVersusGhost(stage, g_selected_stage_index);
 			}
 			else
 			{
-				InGame_Init(stage, stage_number);
+				InGame_Init(stage, g_selected_stage_index);
 			}
 		}
 	}
