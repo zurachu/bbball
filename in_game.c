@@ -12,9 +12,11 @@
 #include "stage.h"
 #include "timer.h"
 #include "pad_log.h"
+#include "selectable_dialog.h"
 
 static enum InGamePlayMode g_play_mode;
 static struct Stage const* g_stage;
+static int g_stage_number;
 static struct Player g_player;
 static struct Player g_ghost;
 static struct Camera g_camera;
@@ -33,10 +35,13 @@ static struct StartCountdown
 };
 static int g_start_countdown_frame_count;
 static int g_game_frame_count;
+static struct SelectableDialog g_dialog;
+static struct SelectableDialog g_error_dialog;
 
 void InGame_Init(enum InGamePlayMode play_mode, struct Stage const* stage, int stage_number)
 {
 	g_stage = stage;
+	g_stage_number = stage_number;
 	Player_Construct(&g_player);
 	if(play_mode == InGamePlayMode_VersusGhost)
 	{
@@ -45,6 +50,8 @@ void InGame_Init(enum InGamePlayMode play_mode, struct Stage const* stage, int s
 	Camera_Construct(&g_camera);
 	PadLog_Construct(&g_logging_pad_log, stage, stage_number);
 	Timer_Construct(&g_timer);
+	SelectableDialog_Disable(&g_dialog);
+	SelectableDialog_Disable(&g_error_dialog);
 	g_start_countdown_frame_count = 0;
 	g_game_frame_count = 0;
 	g_game_mode = GameMode_InGame;
@@ -66,6 +73,34 @@ unsigned long GetPad(enum InGamePlayMode play_mode)
 	return 0;
 }
 
+
+
+static void ErrorDialog(void)
+{
+	SelectableDialog_Update(&g_error_dialog);
+	if(SelectableDialog_IsSelected(&g_error_dialog))
+	{
+		StageSelect_Init();
+	}
+}
+
+static void SelectSaveReplayDialog(void)
+{
+	SelectableDialog_Update(&g_dialog);
+	if(SelectableDialog_IsSelected(&g_dialog))
+	{
+		if(SelectableDialog_SelectedIndex(&g_dialog) == 0 && PadLog_WriteFile(&g_replay_pad_log) != 0)
+		{
+			static char const* const s_choices[] = {"OK"};
+			SelectableDialog_Start(&g_error_dialog, "SAVE FAILED", s_choices, ARRAY_SIZE(s_choices));
+		}
+		else
+		{
+			StageSelect_Init();
+		}
+	}
+}
+
 void InGame_Update(void)
 {
 	unsigned long const pad = GetPad(g_play_mode);
@@ -80,6 +115,18 @@ void InGame_Update(void)
 		return;
 	}
 	
+	if(SelectableDialog_IsEnabled(&g_error_dialog))
+	{
+		ErrorDialog();
+		return;
+	}
+	
+	if(SelectableDialog_IsEnabled(&g_dialog))
+	{
+		SelectSaveReplayDialog();
+		return;
+	}
+	
 	Player_Update(&g_player, pad, g_stage);
 	if(g_play_mode == InGamePlayMode_VersusGhost)
 	{
@@ -90,9 +137,17 @@ void InGame_Update(void)
 	{
 		if(pcePadGet() & TRG_A)
 		{
-			PadLog_Copy(&g_replay_pad_log, &g_logging_pad_log);
-			PadLog_WriteFile(&g_replay_pad_log);
-			StageSelect_Init();
+			if(!PadLog_IsCompatible(&g_replay_pad_log, g_stage, g_stage_number) || g_game_frame_count <= g_replay_pad_log.total_frame)
+			{
+				static char const* const s_choices[] = {"YES", "NO"};
+				SelectableDialog_Start(&g_dialog, "SAVE REPLAY ?", s_choices, ARRAY_SIZE(s_choices));
+				
+				PadLog_Copy(&g_replay_pad_log, &g_logging_pad_log);
+			}
+			else
+			{
+				StageSelect_Init();
+			}
 		}
 	}
 	else
@@ -112,7 +167,7 @@ void InGame_Update(void)
 		PadLog_Log(&g_logging_pad_log, pad, g_game_frame_count);
 	}
 	
-	if(g_player.state != PlayerState_Goal || g_ghost.state != PlayerState_Goal)
+	if(g_player.state != PlayerState_Goal)
 	{
 		g_game_frame_count++;
 	}
@@ -168,4 +223,6 @@ void InGame_Draw(void)
 			break;
 		}
 	}
+	SelectableDialog_Draw(&g_dialog);
+	SelectableDialog_Draw(&g_error_dialog);
 }
