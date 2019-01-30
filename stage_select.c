@@ -79,6 +79,10 @@ void StageSelect_Update(void)
 	if(SelectableDialog_IsEnabled(&g_dialog))
 	{
 		SelectPlayModeDialog();
+		if(pcePadGet() & TRG_B)
+		{
+			SelectableDialog_Disable(&g_dialog);
+		}
 		return;
 	}
 	
