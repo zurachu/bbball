@@ -13,13 +13,7 @@
 #include "timer.h"
 #include "pad_log.h"
 
-static enum PlayMode
-{
-	PlayMode_Single,
-	PlayMode_VersusGhost,
-	PlayMode_Replay,
-} g_play_mode;
-
+static enum InGamePlayMode g_play_mode;
 static struct Stage const* g_stage;
 static struct Player g_player;
 static struct Player g_ghost;
@@ -40,40 +34,31 @@ static struct StartCountdown
 static int g_start_countdown_frame_count;
 static int g_game_frame_count;
 
-void InGame_Init(struct Stage const* stage, int stage_number)
+void InGame_Init(enum InGamePlayMode play_mode, struct Stage const* stage, int stage_number)
 {
 	g_stage = stage;
 	Player_Construct(&g_player);
+	if(play_mode == InGamePlayMode_VersusGhost)
+	{
+		Player_Construct(&g_ghost);
+	}
 	Camera_Construct(&g_camera);
 	PadLog_Construct(&g_logging_pad_log, stage, stage_number);
 	Timer_Construct(&g_timer);
 	g_start_countdown_frame_count = 0;
 	g_game_frame_count = 0;
 	g_game_mode = GameMode_InGame;
-	g_play_mode = PlayMode_Single;
+	g_play_mode = play_mode;
 }
 
-void InGame_InitVersusGhost(struct Stage const* stage, int stage_number)
-{
-	InGame_Init(stage, stage_number);
-	Player_Construct(&g_ghost);
-	g_play_mode = PlayMode_VersusGhost;
-}
-
-void InGame_InitReplay(struct Stage const* stage, int stage_number)
-{
-	InGame_Init(stage, stage_number);
-	g_play_mode = PlayMode_Replay;
-}
-
-unsigned long GetPad(enum PlayMode play_mode)
+unsigned long GetPad(enum InGamePlayMode play_mode)
 {
 	switch(play_mode)
 	{
-	case PlayMode_Single:
-	case PlayMode_VersusGhost:
+	case InGamePlayMode_Single:
+	case InGamePlayMode_VersusGhost:
 		return pcePadGet();
-	case PlayMode_Replay:
+	case InGamePlayMode_Replay:
 		return PadLog_Get(&g_replay_pad_log, g_game_frame_count);
 	default:
 		break;
@@ -96,7 +81,7 @@ void InGame_Update(void)
 	}
 	
 	Player_Update(&g_player, pad, g_stage);
-	if(g_play_mode == PlayMode_VersusGhost)
+	if(g_play_mode == InGamePlayMode_VersusGhost)
 	{
 		Player_Update(&g_ghost, PadLog_Get(&g_replay_pad_log, g_game_frame_count), g_stage);
 	}
@@ -115,7 +100,7 @@ void InGame_Update(void)
 		Timer_Update(&g_timer);
 	}
 	
-	if(g_play_mode == PlayMode_Replay)
+	if(g_play_mode == InGamePlayMode_Replay)
 	{
 		if(pcePadGet() & TRG_A)
 		{
@@ -133,23 +118,23 @@ void InGame_Update(void)
 	}
 }
 
-static void InGame_Player_Draw(enum PlayMode play_mode)
+static void InGame_Player_Draw(enum InGamePlayMode play_mode)
 {
 	int const draw_in_blink = g_game_frame_count % 2;
 	
 	switch(play_mode)
 	{
-	case PlayMode_Single:
+	case InGamePlayMode_Single:
 		Player_Draw(&g_player, &g_camera);
 		break;
-	case PlayMode_VersusGhost:
+	case InGamePlayMode_VersusGhost:
 		Player_Draw(&g_player, &g_camera);
 		if(draw_in_blink)
 		{
 			Player_Draw(&g_ghost, &g_camera);
 		}
 		break;
-	case PlayMode_Replay:
+	case InGamePlayMode_Replay:
 		if(draw_in_blink)
 		{
 			Player_Draw(&g_player, &g_camera);

@@ -8,6 +8,7 @@
 #include "game_mode.h"
 #include "in_game.h"
 #include "stage.h"
+#include "selectable_dialog.h"
 #include "pad_log.h"
 
 static struct Stage const* const s_stages[] = {
@@ -18,17 +19,18 @@ static struct Stage const* const s_stages[] = {
 };
 static int const s_stage_interval = 64;
 
-static int g_has_replay_pad_log[ARRAY_SIZE(s_stages)];
+static int g_has_replay_pad_log_file[ARRAY_SIZE(s_stages)];
 static int g_selected_stage_index = 1;
 static int g_rest_move_x = 0;
+static struct SelectableDialog g_dialog;
 
-static void CheckReplayPadLog()
+static void CheckReplayPadLogFile()
 {
 	FILEINFO pfi;
 	int i;
-	for(i = 0; i < ARRAY_SIZE(g_has_replay_pad_log); i++)
+	for(i = 0; i < ARRAY_SIZE(g_has_replay_pad_log_file); i++)
 	{
-		g_has_replay_pad_log[i] = 0;
+		g_has_replay_pad_log_file[i] = 0;
 	}
 	
 	pceFileFindOpen(&pfi);
@@ -38,7 +40,7 @@ static void CheckReplayPadLog()
 		if(0 < stage_number && stage_number < ARRAY_SIZE(s_stages)
 			&& PadLog_ReadFile(NULL, s_stages[stage_number], stage_number))
 		{
-			g_has_replay_pad_log[stage_number] = 1;
+			g_has_replay_pad_log_file[stage_number] = 1;
 		}
 	}
 	pceFileFindClose(&pfi);
@@ -46,12 +48,40 @@ static void CheckReplayPadLog()
 
 void StageSelect_Init(void)
 {
-	CheckReplayPadLog();
+	CheckReplayPadLogFile();
+	SelectableDialog_Disable(&g_dialog);
 	g_game_mode = GameMode_StageSelect;
+}
+
+static void StartInGame(enum InGamePlayMode play_mode)
+{
+	struct Stage const* const stage = s_stages[g_selected_stage_index];
+	
+	if(!PadLog_IsCompatible(&g_replay_pad_log, stage, g_selected_stage_index) && g_has_replay_pad_log_file[g_selected_stage_index])
+	{
+		PadLog_ReadFile(&g_replay_pad_log, stage, g_selected_stage_index);
+	}
+	InGame_Init(play_mode, stage, g_selected_stage_index);
+}
+
+static void SelectPlayModeDialog(void)
+{
+	SelectableDialog_Update(&g_dialog);
+	if(SelectableDialog_IsSelected(&g_dialog))
+	{
+		enum InGamePlayMode const play_mode = SelectableDialog_SelectedIndex(&g_dialog);
+		StartInGame(play_mode);
+	}
 }
 
 void StageSelect_Update(void)
 {
+	if(SelectableDialog_IsEnabled(&g_dialog))
+	{
+		SelectPlayModeDialog();
+		return;
+	}
+	
 	if(g_rest_move_x == 0)
 	{
 		if(pcePadGet() & PAD_LF && g_selected_stage_index > 1)
@@ -67,22 +97,18 @@ void StageSelect_Update(void)
 		if(pcePadGet() & TRG_A)
 		{
 			struct Stage const* const stage = s_stages[g_selected_stage_index];
-			if(PadLog_IsCompatible(&g_replay_pad_log, stage, g_selected_stage_index))
+			if(PadLog_IsCompatible(&g_replay_pad_log, stage, g_selected_stage_index) || g_has_replay_pad_log_file[g_selected_stage_index])
 			{
-				InGame_InitVersusGhost(stage, g_selected_stage_index);
-			}
-			else if(g_has_replay_pad_log[g_selected_stage_index])
-			{
-				PadLog_ReadFile(&g_replay_pad_log, stage, g_selected_stage_index);
-				InGame_InitVersusGhost(stage, g_selected_stage_index);
+				static char const* const s_choices[] = {"SINGLE", "VS GHOST", "REPLAY"};
+				SelectableDialog_Start(&g_dialog, "SELECT MODE", s_choices, ARRAY_SIZE(s_choices));
 			}
 			else
 			{
-				InGame_Init(stage, g_selected_stage_index);
+				StartInGame(InGamePlayMode_Single);
 			}
 		}
 	}
-
+	
 	if(g_rest_move_x < 0)
 	{
 		g_rest_move_x += 4;
@@ -133,4 +159,5 @@ void StageSelect_Draw(void)
 			DrawOneStage(s_stages[index], index, x);
 		}
 	}
+	SelectableDialog_Draw(&g_dialog);
 }
