@@ -33,6 +33,7 @@ static struct StartCountdown
 	{ 75, 90, "1" },
 	{ 105, 135, "S T A R T" },
 };
+static char const s_goal_message[] = "G O A L";
 static int g_start_countdown_frame_count;
 static int g_game_frame_count;
 static struct SelectableDialog g_dialog;
@@ -72,8 +73,6 @@ unsigned long GetPad(enum InGamePlayMode play_mode)
 	}
 	return 0;
 }
-
-
 
 static void ErrorDialog(void)
 {
@@ -223,6 +222,16 @@ void InGame_Draw(void)
 			break;
 		}
 	}
+	
+	if(g_player.state == PlayerState_Goal)
+	{
+		FontFuchi_SetTxColor(0);
+		FontFuchi_SetBdColor(3);
+		FontFuchi_SetType(1);
+		FontFuchi_SetPos((DISP_X - 8 * strlen(s_goal_message)) / 2, (DISP_Y - 16) / 2);
+		FontFuchi_PutStr(s_goal_message);
+	}
+	
 	SelectableDialog_Draw(&g_dialog);
 	SelectableDialog_Draw(&g_error_dialog);
 }
