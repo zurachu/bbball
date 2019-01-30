@@ -179,18 +179,22 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 
 void Player_Draw(struct Player const* player, struct Camera const* camera)
 {
-	int const ball_h = g_ball.header.h;
-	int const display_y = DISP_Y - player->y - ball_h;
-	int const ball_w = g_ball.header.w;
-	int const display_x = player->x - ball_w / 2 - camera->x;
 	int i;
 	
-	PieceBmp_Draw(&g_ball, display_x, display_y, 0, 0, ball_w, ball_h, DRW_NOMAL);
-	if(display_y + ball_h < g_display_upper_y_limit)
+	if(player->state != PlayerState_Goal)
 	{
-		int const arrow_w = g_arrow.header.w;
-		int const arrow_display_x = player->x - arrow_w / 2 - camera->x;
-		PieceBmp_Draw(&g_arrow, arrow_display_x, g_display_upper_y_limit, 0, 0, arrow_w, g_arrow.header.h, DRW_NOMAL);
+		int const ball_h = g_ball.header.h;
+		int const display_y = DISP_Y - player->y - ball_h;
+		int const ball_w = g_ball.header.w;
+		int const display_x = player->x - ball_w / 2 - camera->x;
+		
+		PieceBmp_Draw(&g_ball, display_x, display_y, 0, 0, ball_w, ball_h, DRW_NOMAL);
+		if(display_y + ball_h < g_display_upper_y_limit)
+		{
+			int const arrow_w = g_arrow.header.w;
+			int const arrow_display_x = player->x - arrow_w / 2 - camera->x;
+			PieceBmp_Draw(&g_arrow, arrow_display_x, g_display_upper_y_limit, 0, 0, arrow_w, g_arrow.header.h, DRW_NOMAL);
+		}
 	}
 	
 	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
