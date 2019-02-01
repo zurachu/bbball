@@ -34,6 +34,7 @@ static struct StartCountdown
 	{ 105, 135, "S T A R T" },
 };
 static char const s_goal_message[] = "G O A L";
+static char const s_time_over_message[] = "TIME OVER";
 static int g_start_countdown_frame_count;
 static int g_game_frame_count;
 static struct SelectableDialog g_dialog;
@@ -126,12 +127,23 @@ void InGame_Update(void)
 		return;
 	}
 	
-	Player_Update(&g_player, pad, g_stage);
-	if(g_play_mode == InGamePlayMode_VersusGhost)
+	if(Timer_IsOverMax(&g_timer))
 	{
-		Player_Update(&g_ghost, PadLog_Get(&g_replay_pad_log, g_game_frame_count), g_stage);
+		if(pcePadGet() & TRG_A)
+		{
+			StageSelect_Init();
+		}
 	}
-	Camera_Update(&g_camera, pad, &g_player, g_stage);
+	else
+	{
+		Player_Update(&g_player, pad, g_stage);
+		if(g_play_mode == InGamePlayMode_VersusGhost)
+		{
+			Player_Update(&g_ghost, PadLog_Get(&g_replay_pad_log, g_game_frame_count), g_stage);
+		}
+		Camera_Update(&g_camera, pad, &g_player, g_stage);
+	}
+	
 	if(g_player.state == PlayerState_Goal)
 	{
 		if(pcePadGet() & TRG_A)
@@ -199,6 +211,15 @@ static void InGame_Player_Draw(enum InGamePlayMode play_mode)
 	}
 }
 
+static void DrawCenteringMessage(char const* message)
+{
+	FontFuchi_SetTxColor(0);
+	FontFuchi_SetBdColor(3);
+	FontFuchi_SetType(1);
+	FontFuchi_SetPos((DISP_X - 8 * strlen(message)) / 2, (DISP_Y - 16) / 2);
+	FontFuchi_PutStr(message);
+}
+
 void InGame_Draw(void)
 {
 	int i;
@@ -214,22 +235,18 @@ void InGame_Draw(void)
 		struct StartCountdown const* const countdown = &s_start_countdown[i];
 		if(countdown->start_frame <= g_start_countdown_frame_count && g_start_countdown_frame_count < countdown->end_frame)
 		{
-			FontFuchi_SetTxColor(0);
-			FontFuchi_SetBdColor(3);
-			FontFuchi_SetType(1);
-			FontFuchi_SetPos((DISP_X - 8 * strlen(countdown->text)) / 2, (DISP_Y - 16) / 2);
-			FontFuchi_PutStr(countdown->text);
+			DrawCenteringMessage(countdown->text);
 			break;
 		}
 	}
-	
-	if(g_player.state == PlayerState_Goal)
+
+	if(Timer_IsOverMax(&g_timer))
 	{
-		FontFuchi_SetTxColor(0);
-		FontFuchi_SetBdColor(3);
-		FontFuchi_SetType(1);
-		FontFuchi_SetPos((DISP_X - 8 * strlen(s_goal_message)) / 2, (DISP_Y - 16) / 2);
-		FontFuchi_PutStr(s_goal_message);
+		DrawCenteringMessage(s_time_over_message);
+	}
+	else if(g_player.state == PlayerState_Goal)
+	{
+		DrawCenteringMessage(s_goal_message);
 	}
 	
 	SelectableDialog_Draw(&g_dialog);

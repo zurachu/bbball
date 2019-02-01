@@ -7,6 +7,7 @@ struct Timer
 };
 
 void Timer_Construct(struct Timer* timer);
+int Timer_IsOverMax(struct Timer const* timer);
 void Timer_Update(struct Timer* timer);
 void Timer_Draw(struct Timer const* timer);
 
