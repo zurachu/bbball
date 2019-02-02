@@ -146,7 +146,7 @@ void InGame_Update(void)
 	
 	if(g_player.state == PlayerState_Goal)
 	{
-		if(pcePadGet() & TRG_A)
+		if(g_play_mode != InGamePlayMode_Replay && (pcePadGet() & TRG_A))
 		{
 			if(!PadLog_IsCompatible(&g_replay_pad_log, g_stage, g_stage_number) || g_game_frame_count <= g_replay_pad_log.total_frame)
 			{
