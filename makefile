@@ -50,6 +50,11 @@ OBJECTS := $(patsubst %.c,%.o,$(SOURCES))
 LIBRARIES := $(LIBRARIES)
 LIBRARIES += $(ZURAPCE_LIBRARY)
 
+# stage
+STAGE_DIR := stage
+STAGE_DATA := $(wildcard $(STAGE_DIR)/*.txt)
+OBJECTS += $(patsubst $(STAGE_DIR)/%.txt,%.o,$(STAGE_DATA))
+
 #=======================================
 # 16階調描画関連コードを高速 RAM に配置する場合
 #=======================================
@@ -101,6 +106,14 @@ $(TARGET) : $(OBJECTS) $(LIBRARIES)
 
 %.o : %.c
 	$(CC) $(CFLAGS) $<
+
+BASE_DIR := $(shell cd)
+STAGE_CONVERTER := $(BASE_DIR)\BBBallStageConverter\BBBallStageConverter.exe
+%.o : $(STAGE_DIR)/%.txt $(STAGE_CONVERTER)
+	cd $(<D) &&\
+	$(STAGE_CONVERTER) $(patsubst %.txt,%.c,$(<F)) $(<F) &&\
+	$(CC) $(CFLAGS) -I$(BASE_DIR) $(patsubst %.txt,%.c,$(<F)) &&\
+	move /Y $(patsubst %.txt,%.o,$(<F)) $(subst /,\,$(BASE_DIR)/$(@D))
 
 #=======================================
 # 自動依存関係生成

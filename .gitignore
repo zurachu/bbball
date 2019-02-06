@@ -5,6 +5,8 @@
 *.srf
 *.pex
 
+stage/*.c
+
 *.exe.config
 
 ## Ignore Visual Studio temporary files, build results, and
