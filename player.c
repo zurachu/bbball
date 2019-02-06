@@ -71,14 +71,14 @@ static void Player_Update_Delta(struct Player* player, struct Stage const* stage
 		return;
 	}
 
-	if(Stage_Block(stage, player->x - ball_w / 2, player->y + ball_h / 2) == 1)
+	if(Stage_Block(stage, player->x - ball_w / 2, player->y + ball_h / 2) == 1 || player->x - ball_w / 2 < 0)
 	{
 		float const block_right_x = (int)(player->x / BLOCK_SIZE) * BLOCK_SIZE;
 		player->x += (block_right_x - (player->x - ball_w / 2)) * 2;
 		player->state = PlayerState_CannotControl;
 		player->vx = -player->vx;
 	}
-	else if(Stage_Block(stage, player->x + ball_w / 2, player->y + ball_h / 2) == 1)
+	else if(Stage_Block(stage, player->x + ball_w / 2, player->y + ball_h / 2) == 1 || player->x + ball_w / 2 > stage->length * BLOCK_SIZE)
 	{
 		float const block_left_x = (int)(player->x / BLOCK_SIZE + 1) * BLOCK_SIZE;
 		player->x += (block_left_x - (player->x + ball_w / 2)) * 2;
