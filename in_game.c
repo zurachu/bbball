@@ -173,12 +173,12 @@ void InGame_Update(void)
 			StageSelect_Init();
 		}
 	}
-	else
+	else if(g_player.state != PlayerState_Goal)
 	{
 		PadLog_Log(&g_logging_pad_log, pad, g_game_frame_count);
 	}
 	
-	if(g_player.state != PlayerState_Goal)
+	if(!Timer_IsOverMax(&g_timer))
 	{
 		g_game_frame_count++;
 	}
