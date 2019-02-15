@@ -13,6 +13,7 @@
 #include "timer.h"
 #include "pad_log.h"
 #include "selectable_dialog.h"
+#include "push_a_button.h"
 
 static enum InGamePlayMode g_play_mode;
 static struct Stage const* g_stage;
@@ -53,6 +54,7 @@ void InGame_Init(enum InGamePlayMode play_mode, struct Stage const* stage, int s
 	Timer_Construct(&g_timer);
 	SelectableDialog_Disable(&g_dialog);
 	SelectableDialog_Disable(&g_error_dialog);
+	PushAButton_Init();
 	g_start_countdown_frame_count = 0;
 	g_game_frame_count = 0;
 	g_game_mode = GameMode_InGame;
@@ -159,6 +161,7 @@ void InGame_Update(void)
 				StageSelect_Init();
 			}
 		}
+		PushAButton_Update();
 	}
 	else
 	{
@@ -239,6 +242,14 @@ static char const* GoalMessage(void)
 	return "G O A L";
 }
 
+static void InGame_PushAButton_Draw(void)
+{
+	if(!SelectableDialog_IsEnabled(&g_dialog) && !SelectableDialog_IsEnabled(&g_error_dialog))
+	{
+		PushAButton_Draw();
+	}
+}
+
 void InGame_Draw(void)
 {
 	int i;
@@ -262,10 +273,12 @@ void InGame_Draw(void)
 	if(Timer_IsOverMax(&g_timer))
 	{
 		DrawCenteringMessage(s_time_over_message);
+		InGame_PushAButton_Draw();
 	}
 	else if(g_player.state == PlayerState_Goal)
 	{
 		DrawCenteringMessage(GoalMessage());
+		InGame_PushAButton_Draw();
 	}
 	
 	SelectableDialog_Draw(&g_dialog);

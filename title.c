@@ -8,6 +8,7 @@
 #include "stage.h"
 #include "player.h"
 #include "camera.h"
+#include "push_a_button.h"
 
 #define STAGE_ONE_LOOP 0x001, 0x001, 0x001, 0x003, 0x007, 0x00F, 0x007, 0x003, 0x001, 0x001, 0x001, 0x003, 0x007, 0x00F, 0x01F, 0x00F, 0x007, 0x003,
 static unsigned short s_stage_data[] = {
@@ -48,8 +49,6 @@ static struct TextAnimation
 };
 static int g_text_animation_frame_count;
 static int const s_text_animation_frames = 10;
-static int g_button_blink_animation_frame_count;
-static int const s_button_blink_animation_frames = 16;
 
 static int TextAnimationIsEnded(void)
 {
@@ -62,8 +61,8 @@ void Title_Init(void)
 	Camera_Construct(&g_camera);
 	
 	g_text_animation_frame_count = 0;
-	g_button_blink_animation_frame_count = 0;
 	g_game_mode = GameMode_Title;
+	PushAButton_Init();
 }
 
 void Title_Update(void)
@@ -79,10 +78,7 @@ void Title_Update(void)
 
 	if(TextAnimationIsEnded())
 	{
-		if(++g_button_blink_animation_frame_count >= s_button_blink_animation_frames)
-		{
-			g_button_blink_animation_frame_count = 0;
-		}
+		PushAButton_Update();
 	}
 	else
 	{
@@ -113,10 +109,8 @@ void Title_Draw(void)
 		FontFuchi_PutStr(animation->text);
 	}
 
-	if(TextAnimationIsEnded() && g_button_blink_animation_frame_count < s_button_blink_animation_frames / 2)
+	if(TextAnimationIsEnded())
 	{
-		FontFuchi_SetType(2);
-		FontFuchi_SetPos(38, 70);
-		FontFuchi_PutStr("PUSH A BUTTON");
+		PushAButton_Draw();
 	}
 }
