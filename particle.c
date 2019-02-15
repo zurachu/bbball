@@ -71,8 +71,6 @@ void Particle_Draw(struct Particle const* particle, struct Camera const* camera)
 		{
 			unsigned char* const p = pceLCDSetBuffer(INVALIDPTR) + display_y * DISP_X + display_x;
 			*p = (*p == COLOR_BLACK) ? COLOR_WHITE : COLOR_BLACK;
-//			pceLCDPoint(3, display_x, display_y);
-//			pceLCDPaint(3, display_x, display_y,2,2);
 		}
 	}
 }
