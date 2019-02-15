@@ -33,7 +33,6 @@ static struct StartCountdown
 	{ 75, 90, "1" },
 	{ 105, 135, "S T A R T" },
 };
-static char const s_goal_message[] = "G O A L";
 static char const s_time_over_message[] = "TIME OVER";
 static int g_start_countdown_frame_count;
 static int g_game_frame_count;
@@ -220,6 +219,26 @@ static void DrawCenteringMessage(char const* message)
 	FontFuchi_PutStr(message);
 }
 
+static char const* GoalMessage(void)
+{
+	if(g_play_mode == InGamePlayMode_VersusGhost)
+	{
+		if(g_logging_pad_log.total_frame < g_replay_pad_log.total_frame)
+		{
+			return "W I N";
+		}
+		else if(g_logging_pad_log.total_frame > g_replay_pad_log.total_frame)
+		{
+			return "L O S E";
+		}
+		else
+		{	// PadLog_Copy() して同一になった時点でこの表示に切り替わるが、 SelectableDialog に隠れるので気にしない
+			return "D R A W";
+		}
+	}
+	return "G O A L";
+}
+
 void InGame_Draw(void)
 {
 	int i;
@@ -246,7 +265,7 @@ void InGame_Draw(void)
 	}
 	else if(g_player.state == PlayerState_Goal)
 	{
-		DrawCenteringMessage(s_goal_message);
+		DrawCenteringMessage(GoalMessage());
 	}
 	
 	SelectableDialog_Draw(&g_dialog);
