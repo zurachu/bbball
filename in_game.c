@@ -105,8 +105,13 @@ static void SelectSaveReplayDialog(void)
 void InGame_Update(void)
 {
 	unsigned long const pad = GetPad(g_play_mode);
-	
 	struct StartCountdown const* const countdown_last = &s_start_countdown[ARRAY_SIZE(s_start_countdown) - 1];
+	
+	if(pcePadGet() & TRG_D)
+	{
+		StageSelect_Init();
+	}
+	
 	if(g_start_countdown_frame_count < countdown_last->end_frame)
 	{
 		g_start_countdown_frame_count++;

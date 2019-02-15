@@ -36,7 +36,7 @@ void pceAppProc(int cnt)
 	PrecisionTimer proc_timer;
 	PrecisionTimer_Construct(&proc_timer);
 	
-	if(g_game_mode == GameMode_Uninitialized || pcePadGet() & TRG_D)
+	if(g_game_mode == GameMode_Uninitialized)
 	{
 		pceAppReqExit(0);
 	}

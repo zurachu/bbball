@@ -68,6 +68,12 @@ void Title_Init(void)
 void Title_Update(void)
 {
 	static unsigned long const s_pad = PAD_RI;
+
+	if(pcePadGet() & TRG_D)
+	{
+		pceAppReqExit(0);
+	}
+
 	Player_Update(&g_player, s_pad, &s_stage);
 	if(g_player.x >= s_stage_one_loop_width * 2)
 	{

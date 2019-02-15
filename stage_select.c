@@ -76,6 +76,11 @@ static void SelectPlayModeDialog(void)
 
 void StageSelect_Update(void)
 {
+	if(pcePadGet() & TRG_D)
+	{
+		pceAppReqExit(0);
+	}
+	
 	if(SelectableDialog_IsEnabled(&g_dialog))
 	{
 		SelectPlayModeDialog();
