@@ -31,7 +31,7 @@ void PadLog_Log(struct PadLog* pad_log, unsigned long pad, int current_frame)
 	{
 		return;
 	}
-	
+
 	pad_log->pad[current_frame] = pad & 0xFF;
 	if(pad_log->total_frame < current_frame)
 	{
@@ -47,7 +47,7 @@ unsigned long PadLog_Get(struct PadLog const* pad_log, int current_frame)
 	{
 		return 0;
 	}
-	
+
 	if(0 < current_frame)
 	{
 		previous_pad = pad_log->pad[current_frame - 1];
@@ -87,7 +87,7 @@ int PadLog_StageNumberFromFileName(char const* filename)
 		p++;
 	}
 	sprintf(expected, s_filename_format, stage_number);
-	
+
 	if(strcmp(filename, expected) == 0)
 	{
 		return stage_number;

@@ -80,7 +80,7 @@ void StageSelect_Update(void)
 	{
 		pceAppReqExit(0);
 	}
-	
+
 	if(SelectableDialog_IsEnabled(&g_dialog))
 	{
 		SelectPlayModeDialog();
@@ -90,7 +90,7 @@ void StageSelect_Update(void)
 		}
 		return;
 	}
-	
+
 	if(g_rest_move_x == 0)
 	{
 		if(pcePadGet() & PAD_LF && g_selected_stage_index > 1)

@@ -17,7 +17,7 @@ void Camera_Update(struct Camera* camera, unsigned long pad, struct Player const
 	int x = camera->x;
 	unsigned long last_direction = camera->last_direction;
 	int target_x = player->x - DISP_X / 2;
-	
+
 	if(pad & PAD_RI)
 	{
 		last_direction = PAD_RI;
@@ -35,7 +35,7 @@ void Camera_Update(struct Camera* camera, unsigned long pad, struct Player const
 	{
 		target_x -= DISP_X / 4;
 	}
-	
+
 	if(x < target_x)
 	{
 		x++;
@@ -44,7 +44,7 @@ void Camera_Update(struct Camera* camera, unsigned long pad, struct Player const
 	{
 		x--;
 	}
-	
+
 	if(x < 0 || x_limit < 0)
 	{
 		x = 0;
@@ -53,7 +53,7 @@ void Camera_Update(struct Camera* camera, unsigned long pad, struct Player const
 	{
 		x = x_limit;
 	}
-	
+
 	camera->x = x;
 	camera->last_direction = last_direction;
 }

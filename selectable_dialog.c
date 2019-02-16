@@ -76,18 +76,18 @@ void SelectableDialog_Draw(struct SelectableDialog const* dialog)
 		int const border_top = y - 3;
 		int const border_bottom = y + inner_height + 3 - 1;
 		int i;
-		
+
 		pceLCDPaint(0, s_inner_x - 4, y - 4, s_inner_width + 8, inner_height + 8);
 		pceLCDLine(3, s_border_left, border_top, s_border_right, border_top);
 		pceLCDLine(3, s_border_left, border_bottom, s_border_right, border_bottom);
 		pceLCDLine(3, s_border_left, border_top, s_border_left, border_bottom);
 		pceLCDLine(3, s_border_right, border_top, s_border_right, border_bottom);
-		
+
 		pceFontSetType(0);
 		pceFontSetBkColor(FC_SPRITE);
 		pceFontSetTxColor(3);
 		FontPutStrWithCentering(dialog->message, y);
-		
+
 		y += 2 * 10;
 		for(i = 0; i < dialog->num_choices; i++, y += 10)
 		{

@@ -35,12 +35,12 @@ void pceAppProc(int cnt)
 {
 	PrecisionTimer proc_timer;
 	PrecisionTimer_Construct(&proc_timer);
-	
+
 	if(g_game_mode == GameMode_Uninitialized)
 	{
 		pceAppReqExit(0);
 	}
-	
+
 	switch(g_game_mode)
 	{
 	case GameMode_Uninitialized:
@@ -70,7 +70,7 @@ void pceAppProc(int cnt)
 		InGame_Draw();
 		break;
 	}
-	
+
 	Lcd_Update();
 	Lcd_Trans();
 

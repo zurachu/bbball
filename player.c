@@ -32,7 +32,7 @@ static void Player_StartFreeFallFromTop(struct Player* player, float x)
 void Player_Construct(struct Player* player)
 {
 	int i;
-	
+
 	Player_StartFreeFallFromTop(player, g_ball.header.w / 2);
 
 	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
@@ -61,7 +61,7 @@ static void Player_Update_Delta(struct Player* player, struct Stage const* stage
 	float const ball_h = g_ball.header.h;
 	float const dvx = player->vx / total;
 	float const dvy = player->vy / total;
-	
+
 	player->x += dvx;
 	player->y += dvy;
 
@@ -134,7 +134,7 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 	{
 		Particle_Update(&player->particles[i]);
 	}
-	
+
 	switch(player->state)
 	{
 	case PlayerState_CannotControl:
@@ -163,7 +163,7 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 	case PlayerState_Goal:
 		return;
 	}
-	
+
 	player->vy -= g_mass * gravity_acc_per_frame;
 	delta_count = RequiredDeltaCount(player);
 	for(i = 0; i < delta_count; i++)
@@ -180,7 +180,7 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 void Player_Draw(struct Player const* player, struct Camera const* camera)
 {
 	int i;
-	
+
 	if(player->state != PlayerState_Goal)
 	{
 		int const ball_h = g_ball.header.h;
@@ -196,7 +196,7 @@ void Player_Draw(struct Player const* player, struct Camera const* camera)
 			PieceBmp_Draw(&g_arrow, arrow_display_x, g_display_upper_y_limit, 0, 0, arrow_w, g_arrow.header.h, DRW_NOMAL);
 		}
 	}
-	
+
 	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
 	{
 		Particle_Draw(&player->particles[i], camera);

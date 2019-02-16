@@ -100,10 +100,10 @@ void Title_Update(void)
 void Title_Draw(void)
 {
 	int i;
-	
+
 	Stage_Draw(&s_stage, &g_camera);
 	Player_Draw(&g_player, &g_camera);
-	
+
 	FontFuchi_SetTxColor(0);
 	FontFuchi_SetBdColor(3);
 	for(i = 0; i < sizeof(s_text_animations) / sizeof(s_text_animations[0]); i++)

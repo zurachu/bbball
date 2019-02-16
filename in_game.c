@@ -106,12 +106,12 @@ void InGame_Update(void)
 {
 	unsigned long const pad = GetPad(g_play_mode);
 	struct StartCountdown const* const countdown_last = &s_start_countdown[ARRAY_SIZE(s_start_countdown) - 1];
-	
+
 	if(pcePadGet() & TRG_D)
 	{
 		StageSelect_Init();
 	}
-	
+
 	if(g_start_countdown_frame_count < countdown_last->end_frame)
 	{
 		g_start_countdown_frame_count++;
@@ -120,19 +120,19 @@ void InGame_Update(void)
 	{
 		return;
 	}
-	
+
 	if(SelectableDialog_IsEnabled(&g_error_dialog))
 	{
 		ErrorDialog();
 		return;
 	}
-	
+
 	if(SelectableDialog_IsEnabled(&g_dialog))
 	{
 		SelectSaveReplayDialog();
 		return;
 	}
-	
+
 	if(Timer_IsOverMax(&g_timer))
 	{
 		if(pcePadGet() & TRG_A)
@@ -149,7 +149,7 @@ void InGame_Update(void)
 		}
 		Camera_Update(&g_camera, pad, &g_player, g_stage);
 	}
-	
+
 	if(g_player.state == PlayerState_Goal)
 	{
 		if(g_play_mode != InGamePlayMode_Replay && (pcePadGet() & TRG_A))
@@ -158,7 +158,7 @@ void InGame_Update(void)
 			{
 				static char const* const s_choices[] = {"YES", "NO"};
 				SelectableDialog_Start(&g_dialog, "SAVE REPLAY ?", s_choices, ARRAY_SIZE(s_choices));
-				
+
 				PadLog_Copy(&g_replay_pad_log, &g_logging_pad_log);
 			}
 			else
@@ -172,7 +172,7 @@ void InGame_Update(void)
 	{
 		Timer_Update(&g_timer);
 	}
-	
+
 	if(g_play_mode == InGamePlayMode_Replay)
 	{
 		if(pcePadGet() & TRG_A)
@@ -184,7 +184,7 @@ void InGame_Update(void)
 	{
 		PadLog_Log(&g_logging_pad_log, pad, g_game_frame_count);
 	}
-	
+
 	if(!Timer_IsOverMax(&g_timer))
 	{
 		g_game_frame_count++;
@@ -194,7 +194,7 @@ void InGame_Update(void)
 static void InGame_Player_Draw(enum InGamePlayMode play_mode)
 {
 	int const draw_in_blink = g_game_frame_count % 2;
-	
+
 	switch(play_mode)
 	{
 	case InGamePlayMode_Single:
@@ -258,13 +258,13 @@ static void InGame_PushAButton_Draw(void)
 void InGame_Draw(void)
 {
 	int i;
-	
+
 	Stage_Draw(g_stage, &g_camera);
 	InGame_Player_Draw(g_play_mode);
-	
+
 	pceLCDPaint(0, 0, 0, DISP_X, 8);
 	Timer_Draw(&g_timer);
-	
+
 	for(i = 0; i < ARRAY_SIZE(s_start_countdown); i++)
 	{
 		struct StartCountdown const* const countdown = &s_start_countdown[i];
@@ -285,7 +285,7 @@ void InGame_Draw(void)
 		DrawCenteringMessage(GoalMessage());
 		InGame_PushAButton_Draw();
 	}
-	
+
 	SelectableDialog_Draw(&g_dialog);
 	SelectableDialog_Draw(&g_error_dialog);
 }

@@ -44,9 +44,9 @@ void Stage_Draw(struct Stage const* stage, struct Camera const* camera)
 	int const block_offset = x_offset / BLOCK_SIZE;
 	int i;
 	x_offset -= block_offset * BLOCK_SIZE;
-	
+
 	pceLCDPaint(0, 0, 0, DISP_X, DISP_Y);
-	
+
 	for(i = 0; i <= DISP_X / BLOCK_SIZE; i++)
 	{
 		unsigned short vertical = stage->data[block_offset + i];
@@ -75,9 +75,9 @@ void Stage_DrawForStageSelect(struct Stage const* stage, int center_x, int cente
 	int const left_x = center_x - width / 2;
 	int const top_y = center_y - height / 2;
 	int i;
-	
+
 	pceLCDPaint(0, left_x, top_y, width, height);
-	
+
 	for(i = 0; i < s_block_length; i++)
 	{
 		unsigned short vertical = stage->data[i];
