@@ -177,10 +177,17 @@ void Player_Update(struct Player* player, unsigned long pad, struct Stage const*
 	}
 }
 
-void Player_Draw(struct Player const* player, struct Camera const* camera)
+static void Player_Particle_Draw(struct Player const* player, struct Camera const* camera)
 {
 	int i;
+	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
+	{
+		Particle_Draw(&player->particles[i], camera);
+	}
+}
 
+void Player_Draw(struct Player const* player, struct Camera const* camera)
+{
 	if(player->state != PlayerState_Goal)
 	{
 		int const ball_h = g_ball.header.h;
@@ -197,8 +204,5 @@ void Player_Draw(struct Player const* player, struct Camera const* camera)
 		}
 	}
 
-	for(i = 0; i < ARRAY_SIZE(player->particles); i++)
-	{
-		Particle_Draw(&player->particles[i], camera);
-	}
+	Player_Particle_Draw(player, camera);
 }
