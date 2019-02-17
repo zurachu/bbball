@@ -22,6 +22,8 @@ void PushAButton_Draw(void)
 {
 	if(g_blink_animation_frame_count < s_blink_animation_frames / 2)
 	{
+		FontFuchi_SetTxColor(0);
+		FontFuchi_SetBdColor(3);
 		FontFuchi_SetType(2);
 		FontFuchi_SetPos(38, 70);
 		FontFuchi_PutStr("PUSH A BUTTON");

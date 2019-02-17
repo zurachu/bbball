@@ -27,6 +27,8 @@ void Timer_Update(struct Timer* timer)
 void Timer_Draw(struct Timer const* timer)
 {
 	unsigned int const ms = timer->ms;
+	FontFuchi_SetTxColor(0);
+	FontFuchi_SetBdColor(3);
 	FontFuchi_SetType(2);
 	FontFuchi_SetPos(1, 1);
 	FontFuchi_Printf("TIME: %02lu\"%03lu", ms / 1000, ms % 1000);
