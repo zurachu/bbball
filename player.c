@@ -57,7 +57,7 @@ static void Player_Particle_Start(struct Player* player, int count)
 
 static void Player_Update_Delta(struct Player* player, struct Stage const* stage, int total)
 {
-	float const ball_w = g_ball.header.w;
+	float const ball_w = g_ball.header.w - 2;
 	float const ball_h = g_ball.header.h;
 	float const dvx = player->vx / total;
 	float const dvy = player->vy / total;

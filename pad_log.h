@@ -2,7 +2,7 @@
 #define PAD_LOG_H_201810130037
 
 // 挙動処理の変更などで、過去のログが使えなくなるタイミングでバージョンアップする
-#define PAD_LOG_VERSION (1)
+#define PAD_LOG_VERSION (2)
 
 struct Stage;
 
