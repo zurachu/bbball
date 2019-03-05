@@ -11,11 +11,14 @@
 #include "selectable_dialog.h"
 #include "pad_log.h"
 
+extern struct Stage const g_stage1;
+extern struct Stage const g_stage2;
+extern struct Stage const g_stage3;
 static struct Stage const* const s_stages[] = {
 	NULL, // dummy
 	&g_stage1,
-	&g_stage1,
-	&g_stage1,
+	&g_stage2,
+	&g_stage3,
 };
 static int const s_stage_interval = 64;
 

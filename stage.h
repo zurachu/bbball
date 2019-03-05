@@ -13,7 +13,6 @@ struct Stage
 	int goal_y;
 };
 
-extern struct Stage const g_stage1;
 
 void Stage_Init(void);
 int Stage_Block(struct Stage const* stage, int x, int y);
